@@ -18,5 +18,16 @@
 
         public string Phone { get; set; }
 
+        public string Email { get; set; }
+
+        public string Contact { get; set; }
+        public string Notes { get; set; }
+        public string Terms { get; set; }
+
+        public string Logo { get; set; }
+
+
+
+
     }
 }

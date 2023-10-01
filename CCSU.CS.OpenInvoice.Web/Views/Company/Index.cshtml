@@ -1,0 +1,120 @@
+﻿@model Company
+
+<div id="form">
+    @using (Html.BeginForm("Save", "Companies"))
+    {
+        using (Html.DevExtreme().ValidationGroup())
+        {
+            @Html.AntiForgeryToken()
+
+            @(Html.DevExtreme().Form<Company>()
+                            .FormData(Model)
+                            .ID("form")
+                            .OnContentReady("companyForm_onContentReady")
+                            .Items(items =>
+                            {
+                                    items.AddGroup()
+                                        .CssClass("first-group")      
+                                        .Caption("Company Identity")
+                                        .ColCount(4)
+                                        .Items(groupItems =>
+                                        {
+                                            groupItems.AddSimple().Template("<img id='company-logo' class ='form-avatar' src='#'alt='your image' />");
+                                            groupItems.AddSimpleFor(m => m.Logo)
+                                                        .Label(e => e.Visible(false)).Template(@<text>
+                                                            @(Html.DevExtreme().FileUploader()
+                                                                .Name("Photo")
+                                                                .SelectButtonText("Change Logo")
+                                                                .LabelText("")
+                                                                .Accept("image/*")
+                                                                .UploadMode(FileUploadMode.UseForm)
+                                                                .OnValueChanged("fileUploader_onValueChanged"))
+
+                                                             </text>);
+                                            groupItems.AddGroup().ColSpan(2).Items(secondGroupItems =>
+                                            {
+                                                secondGroupItems.AddSimpleFor(m => m.Name);
+                                                secondGroupItems.AddSimpleFor(m => m.Contact);
+                                                
+                                            });
+
+                                        });
+
+                                    items.AddGroup()
+                                        .Caption("Company Adress")
+                                        .CssClass("second-group")
+                                        .ColCount(2).Items(groupItems =>
+                                        {
+
+                                            groupItems.AddGroup().Items(secondGroupItems =>
+                                            {
+
+                                                secondGroupItems.AddSimpleFor(m => m.Address);
+                                                secondGroupItems.AddSimpleFor(m => m.Address2);
+                                                secondGroupItems.AddSimpleFor(m => m.City);
+                                                secondGroupItems.AddGroup().ColCount(2).Items(innerGroupItems => {
+                                                
+                                                    innerGroupItems.AddSimpleFor(m => m.State).Editor(e => e
+                                                    
+                                                        .SelectBox()
+                                                        .InputAttr("aria-label", "State")
+                                                        .DataSource(new[] {
+
+                                                                "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
+                                                                "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
+                                                                "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
+                                                                "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
+                                                                "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"
+                                                        
+                                                                                                               
+                                                        })
+                                                    );
+                                                    innerGroupItems.AddSimpleFor(m => m.Zip).Label(l => l.Text("Zip Code"));
+                                                
+                                                });
+                                            });
+
+                                            groupItems.AddGroup().Items(secondRightItems => {
+
+                                                secondRightItems.AddSimpleFor(m => m.Email).Label(l => l.Text("Email Address"));
+                                                secondRightItems.AddSimpleFor(m => m.Phone)
+                                                    .Editor(e => e
+                                                        .TextBox()
+                                                        .InputAttr("aria-label", "Mask")
+                                                        .Mask("+1 (000) 000-0000")
+                                                    );
+
+                                                    
+                                            });
+
+
+                                        });
+
+                                    items.AddSimpleFor(m => m.Notes)
+                                        .Editor(e => e
+                                            .TextArea()
+                                            .InputAttr("aria-label", "Notes")
+                                            .Height(140)
+                                         );
+
+                                    items.AddSimpleFor(m => m.Terms)
+                                        .Editor(e => e
+                                        .TextArea()
+                                        .InputAttr("aria-label", "Terms & Conditions")
+                                        .Height(140)
+                                        );
+                                    items.AddButton()
+                                         .HorizontalAlignment(HorizontalAlignment.Left)
+                                         .ButtonOptions(b => b.Text("Register")
+                                         .Type(ButtonType.Success)
+                                         .UseSubmitBehavior(true)
+                                         );
+                                        
+                            })
+                            
+            
+            
+            )
+        }
+    }
+</div>
