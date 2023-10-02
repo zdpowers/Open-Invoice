@@ -1,0 +1,17 @@
+﻿@model IEnumerable<CCSU.CS.OpenInvoice.Web.Models.Customer>
+
+@(Html.DevExtreme().DataGrid()
+    .ID("gridContainer")
+    .DataSource(Model)
+    .ShowBorders(true)
+    .Columns(columns => {
+        columns.Add().DataField("Name");
+        columns.Add().DataField("Address");
+        columns.Add().DataField("Address2");
+        columns.Add().DataField("City");
+        columns.Add().DataField("State");
+        columns.Add().DataField("Zip");
+        columns.Add().DataField("Country");
+        columns.Add().DataField("Phone");
+    })
+)
