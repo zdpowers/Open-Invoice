@@ -1,7 +1,10 @@
+using CCSU.CS.OpenInvoice.Web;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<InvoicingContext>();
 
 var app = builder.Build();
 

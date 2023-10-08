@@ -31,3 +31,8 @@ body {
     background-repeat: no-repeat;
     background-position: center;
 }
+
+.page-title {
+    padding-bottom: 15px;
+    color: #1313df;
+}
