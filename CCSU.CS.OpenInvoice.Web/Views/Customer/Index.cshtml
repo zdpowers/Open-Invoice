@@ -1,0 +1,40 @@
+﻿@model IEnumerable<CCSU.CS.OpenInvoice.Web.Models.Customer>
+<!--Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gridView";
+    settings.SettingsSearchPanel.Visible = true;
+}).Bind(Model).GetHtml()
+<div>
+    (Html.DevExtreme().Button()
+    .Icon("plus")
+    .OnClick("notify")
+    )
+</div> -->
+
+<div>
+    @(Html.DevExtreme().Button().Text(" + ")
+)
+</div>
+
+<div>
+    @(Html.DevExtreme().DataGrid()
+    .ID("gridContainer")
+    .DataSource(Model)
+    .SearchPanel(s => s
+        .Visible(true)
+        .HighlightCaseSensitive(true)
+    )
+    .ShowBorders(true)
+    .Columns(columns => {
+        columns.Add().DataField("Name");
+        columns.Add().DataField("Address");
+        columns.Add().DataField("Address2");
+        columns.Add().DataField("City");
+        columns.Add().DataField("State");
+        columns.Add().DataField("Zip");
+        columns.Add().DataField("Country");
+        columns.Add().DataField("Phone");
+        columns.Add().DataField("Email");
+    })
+)
+</div>

@@ -6,11 +6,16 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
   <ItemGroup>
     <Compile Remove="wwwroot\NewFolder\**" />
     <Content Remove="wwwroot\NewFolder\**" />
     <EmbeddedResource Remove="wwwroot\NewFolder\**" />
     <None Remove="wwwroot\NewFolder\**" />
+    <None Remove="Views\Customer\" />
+    <None Remove="Models\SampleData\" />
+    <None Remove="Models\DataGrid\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,4 +42,9 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Customer\" />
+    <Folder Include="Models\SampleData\" />
+    <Folder Include="Models\DataGrid\" />
+  </ItemGroup>
 </Project>
