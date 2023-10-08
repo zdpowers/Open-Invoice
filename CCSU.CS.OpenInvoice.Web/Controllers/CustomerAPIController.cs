@@ -1,4 +1,7 @@
 ﻿using CCSU.CS.OpenInvoice.Web.Models;
+using CCSU.CS.OpenInvoice.Web.Models.SampleData;
+using DevExtreme.AspNet.Data;
+using DevExtreme.AspNet.Mvc;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CCSU.CS.OpenInvoice.Web.Controllers {
@@ -6,16 +9,24 @@ namespace CCSU.CS.OpenInvoice.Web.Controllers {
     [ApiController]
 
     public class CustomerAPIController : ControllerBase {
+
+        [HttpGet]
+        public ActionResult Get(DataSourceLoadOptions loadOptions)
+        {
+            return Ok(DataSourceLoader.Load(CustomerSampleData.DataGridCustomers, loadOptions));
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Save(Customer customerInfo) {
+        public ActionResult Create(Customer customerInfo) {
 
             //if(ModelState.IsValid) {
             //    return View("SuccessValidation");
             //}
 
-            return Ok(customerInfo);
+            return Ok(CustomerSampleData.DataGridCustomers.Add(customerInfo));
         }
+
     }
 }
 
