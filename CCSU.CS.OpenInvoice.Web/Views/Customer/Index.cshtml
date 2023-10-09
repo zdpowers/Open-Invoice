@@ -1,40 +1,98 @@
-﻿@model IEnumerable<CCSU.CS.OpenInvoice.Web.Models.Customer>
-<!--Html.DevExpress().GridView(settings =>
-{
-    settings.Name = "gridView";
-    settings.SettingsSearchPanel.Visible = true;
-}).Bind(Model).GetHtml()
-<div>
-    (Html.DevExtreme().Button()
-    .Icon("plus")
-    .OnClick("notify")
-    )
-</div> -->
+﻿
+<h3 class="page-title">Customers</h3>
+<div id="data-grid-demo">
+    @(Html.DevExtreme().DataGrid<Customer>()
+        .ID("gridContainer")
+        .ShowBorders(true)
+        .Paging(p => p.PageSize(10))
+            .Pager(p => p
+            .ShowPageSizeSelector(true)
+            .AllowedPageSizes(new[] { 10, 25, 50, 100 })
+        )
+        .SearchPanel(s => s
+            .Visible(true)
+            .HighlightCaseSensitive(true)
+        )
+        .Editing(e => e.Mode(GridEditMode.Popup)
+            .AllowUpdating(true)
+            .AllowAdding(true)
+            .AllowDeleting(true)
+            .Popup(p => p
+                    .Title("Customer Info")
+                    .ShowTitle(true)
+                    .Width(900)
+                    .Height(800)
+            )
+            .Form(f => f.Items(items =>
+            {
+                items.AddGroup()
+                .ColSpan(2)
+                .Caption("General Info")
+                .ColCount(2)
+                .Items(groupItems =>
+                {
+                    groupItems.AddSimpleFor(m => m.Name).Label(l=> l.Text("Customer Name"));
+                    groupItems.AddSimpleFor(m => m.Contact).Label(l => l.Text("Contact Name"));
+                    groupItems.AddSimpleFor(m => m.Phone).Editor(e => e
+                            .TextBox()
+                            .InputAttr("aria-label", "Mask")
+                            .Mask("+1 (000) 000-0000"));
+                    groupItems.AddSimpleFor(m => m.Email).Label(l => l.Text("Email Address"));
+                });
 
-<div>
-    @(Html.DevExtreme().Button().Text(" + ")
-)
-</div>
+                items.AddGroup()
+                .Caption("Address")
+                .ColSpan(2)
+                .Items(groupItems =>
+                {
+                    groupItems.AddSimpleFor(m => m.Address);
+                    groupItems.AddSimpleFor(m => m.Address2);
+                    groupItems.AddGroup().ColCount(2).Items(innerGroupItems =>
+                    {
 
-<div>
-    @(Html.DevExtreme().DataGrid()
-    .ID("gridContainer")
-    .DataSource(Model)
-    .SearchPanel(s => s
-        .Visible(true)
-        .HighlightCaseSensitive(true)
-    )
-    .ShowBorders(true)
-    .Columns(columns => {
-        columns.Add().DataField("Name");
-        columns.Add().DataField("Address");
-        columns.Add().DataField("Address2");
-        columns.Add().DataField("City");
-        columns.Add().DataField("State");
-        columns.Add().DataField("Zip");
-        columns.Add().DataField("Country");
-        columns.Add().DataField("Phone");
-        columns.Add().DataField("Email");
-    })
-)
+                        innerGroupItems.AddSimpleFor(m => m.City);
+                        innerGroupItems.AddSimpleFor(m => m.State);
+                    });
+
+                    groupItems.AddGroup().ColCount(2).Items(innerGroupItems =>
+                    {
+
+                        innerGroupItems.AddSimpleFor(m => m.Zip).Label(l => l.Text("Zip Code"));
+                        innerGroupItems.AddSimpleFor(m => m.Country);
+
+
+                    });
+
+                });
+                items.AddGroup()
+                .Caption("Notes")
+                .ColSpan(2) 
+                .Items(groupItems => {
+                    groupItems.AddSimpleFor(m => m.Notes)
+                    .Editor(e => e
+                    .TextArea()
+                    .InputAttr("aria-label", "Notes")
+                    .Height(140));
+                 
+                });
+
+            }))
+        )
+        .Columns(columns =>
+        {
+            columns.AddFor(m => m.Name);
+            columns.AddFor(m => m.Contact);
+            columns.AddFor(m => m.CustomerId).Visible(false);
+            columns.AddFor(m => m.Address).Visible(false);
+            columns.AddFor(m => m.Address2).Visible(false);
+            columns.AddFor(m => m.City).Visible(false);
+            columns.AddFor(m => m.State).Visible(false);
+            columns.AddFor(m => m.Zip).Visible(false);
+            columns.AddFor(m => m.Country).Visible(false);
+            columns.AddFor(m => m.Phone);
+            columns.AddFor(m => m.Email);
+            columns.AddFor(m => m.Notes).Visible(false);
+        })
+        .DataSource(d => d.WebApi().Controller("Customers").UpdateAction(true).InsertAction(true).DeleteAction(true).Key("CustomerId"))
+        )
 </div>
