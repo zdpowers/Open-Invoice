@@ -87,10 +87,13 @@ namespace CCSU.CS.OpenInvoice.Web.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Address2")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Contact")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -98,8 +101,15 @@ namespace CCSU.CS.OpenInvoice.Web.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Notes")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Phone")

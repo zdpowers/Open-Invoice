@@ -36,8 +36,8 @@
         );
                                                 groupItems.AddGroup().ColSpan(2).Items(secondGroupItems =>
                                                 {
-                                                    secondGroupItems.AddSimpleFor(m => m.Name);
-                                                    secondGroupItems.AddSimpleFor(m => m.Contact);                                              
+                                                    secondGroupItems.AddSimpleFor(m => m.Name).Label(l=> l.Text("Company Name"));
+                                                    secondGroupItems.AddSimpleFor(m => m.Contact).Label(l=> l.Text("Contact Name"));                                              
                                                     secondGroupItems.AddSimpleFor(m => m.Phone)
                                                         .Editor(e => e
                                                             .TextBox()
@@ -51,7 +51,7 @@
                                             });
 
                                     items.AddGroup()
-                            .Caption("Adress")
+                            .Caption("Address")
                             .CssClass("second-group")
                             .ColCount(2).Items(groupItems =>
                             {
@@ -82,7 +82,7 @@
                                                     });
 
                                                     
-                                            });
+                                                });
 
 
                                         });
