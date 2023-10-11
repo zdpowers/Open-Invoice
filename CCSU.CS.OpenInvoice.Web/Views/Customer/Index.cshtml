@@ -4,6 +4,7 @@
     @(Html.DevExtreme().DataGrid<Customer>()
         .ID("gridContainer")
         .ShowBorders(true)
+        .Export(e => e.Enabled(true))
         .Paging(p => p.PageSize(10))
             .Pager(p => p
             .ShowPageSizeSelector(true)
