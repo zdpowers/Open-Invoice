@@ -1,0 +1,1 @@
+const table = new DataTable('#example');
