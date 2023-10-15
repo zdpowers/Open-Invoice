@@ -2,6 +2,110 @@
 
 <h3 class="page-title">Company Information</h3>
 
+@{
+    var formSource = string.IsNullOrEmpty(Model.Logo) ? "/images/nologo.jpg" : Model.Logo;
+}
+
+<form id ="company-form">
+
+    @Html.AntiForgeryToken()
+
+    <div class="form-row">
+        <div class="form-group col-md-3 profile-pic-wrapper justify-content-center d-flex align-content-center">
+            <div class="pic-holder">
+                <!-- uploaded pic shown here -->
+                <img id="profilePic" class="pic" src="@formSource">
+
+                <Input class="uploadProfileInput" type="file" name="profile_pic" id="newProfilePhoto" accept="image/*" style="opacity: 0;" />
+                <label for="newProfilePhoto" class="upload-file-block">
+                    <div class="text-center">
+                        <div class="mb-2">
+                            <i class="fa fa-camera fa-2x"></i>
+                        </div>
+                        <div class="text-uppercase">
+                            Update <br /> Company Logo
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="form-group col">
+                    <label for="inputPassword4">Company Name:</label>
+                    <input type="text" class="form-control" asp-for="Name">
+                </div>
+                <div class="form-group col">
+                    <label for="inputPassword4">Contact Name:</label>
+                    <input type="text" class="form-control" asp-for="Contact">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col">
+                    <label for="inputPassword4">Phone:</label>
+                    <input type="text" class="form-control" asp-for="Phone">
+                </div>
+                <div class="form-group col">
+                    <label for="inputPassword4">Email Address:</label>
+                    <input type="text" class="form-control" asp-for="Email">
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="card company-card">     
+        <div class="card-body">
+            <div class="card-title company-card-title">Address Information</div>
+            <div class="form-group">
+                <label for="inputAddress">Address</label>
+                <input type="text" class="form-control" placeholder="1234 Main St" asp-for="Address">
+            </div>
+            <div class="form-group">
+                <label for="inputAddress2">Address 2</label>
+                <input type="text" class="form-control" placeholder="Apartment, studio, or floor" asp-for="Address2">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="inputCity">City</label>
+                    <input type="text" class="form-control" asp-for="City">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="inputState">State</label>
+                    <input type="text" class="form-control" asp-for="State">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="inputZip">Zip</label>
+                    <input type="text" class="form-control" asp-for="Zip">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="inputZip">Country</label>
+                    <input type="text" class="form-control" asp-for="Country">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card company-card">
+        <div class="card-body">
+            <div class="card-title company-card-title">Notes & Terms</div>
+            <div class="form-group">
+                <label for="inputAddress">Notes</label>
+                <textarea class="form-control" asp-for="Notes"  rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="inputAddress">Terms</label>
+                <textarea class="form-control" asp-for="Terms" rows="3"></textarea>
+            </div>
+           
+           
+        </div>
+    </div>
+
+    
+    <input type="hidden" class="form-control" asp-for="Logo">
+    <input type="hidden" class="form-control" asp-for="CompanyId">
+    <button type="submit"  class="btn btn-primary">Save</button>
+</form>
 
 @section Scripts{
 
