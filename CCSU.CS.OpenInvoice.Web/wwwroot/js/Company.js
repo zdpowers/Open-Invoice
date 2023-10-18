@@ -107,9 +107,11 @@ document.addEventListener("change", function (event) {
 
 $("#company-form").on("submit", function (e) {
     event.preventDefault();
-    let form = $(e.target);
-    let json = convertFormToJSON(form);
-    submitForm(json);
+    if ($("#company-form").valid()) {
+        let form = $(e.target);
+        let json = convertFormToJSON(form);
+        submitForm(json);
+    }
 });
 
 function convertFormToJSON(form) {
