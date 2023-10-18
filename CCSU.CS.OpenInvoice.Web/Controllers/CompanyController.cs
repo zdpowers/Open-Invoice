@@ -13,8 +13,9 @@ namespace CCSU.CS.OpenInvoice.Web.Controllers
         public IActionResult Index()
         {
             var company = _invoicingContext.Companies.FirstOrDefault();
-            // We have to get Company saved in database
-            // Make company obeject and pass to view
+            if (company == null)
+                company = new Company();
+
             return View(company);
         }
     }
