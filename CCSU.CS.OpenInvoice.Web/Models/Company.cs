@@ -4,7 +4,7 @@ namespace CCSU.CS.OpenInvoice.Web.Models
 {
     public class Company
     {
-        public int CompanyId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public string? Name { get; set; }

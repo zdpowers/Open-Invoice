@@ -1,0 +1,66 @@
+﻿@model Invoice
+<div class="invoice-container">
+
+
+    <form id="company-form">
+
+        @Html.AntiForgeryToken()
+
+        <div class="form-row">
+            <div class="form-group col-md-9 profile-pic-wrapper align-self-start">
+                <div class="invoice-logo">
+                    <!-- uploaded pic shown here -->
+                    <img id="profilePic" class="pic" src="@Model.Company.Logo">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="form-group col">
+                        <h1>INVOICE</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">#</div>
+                        </div>
+                        <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Invoice Number">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-7 profile-pic-wrapper align-self-start">
+            </div>
+            <div class="col-md-5">
+                <div class="row form-group">
+                    <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Date</label>
+                    <div class="col-sm-8">
+                        <input type="email" class="form-control form-control-sm" asp-for="Date">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Payment Terms</label>
+                    <div class="col-sm-8">
+                        <input type="email" class="form-control form-control-sm" asp-for="PaymentTerms">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Due Date</label>
+                    <div class="col-sm-8">
+                        <input type="email" class="form-control form-control-sm" asp-for="DueDate">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </form>
+</div>
+@section Scripts{
+
+    <script src="~/js/Company.js"></script>
+
+}
