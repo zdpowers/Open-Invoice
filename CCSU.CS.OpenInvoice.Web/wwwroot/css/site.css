@@ -45,18 +45,18 @@ body {
     text-align: center;
     position: relative;
     border-radius: 50%;
+    border: 1px solid #ced4da;
     width: 200px;
     height: 200px;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 20px;
 }
 
     .pic-holder .pic {
-        height: 100%;
-        width: 100%;
+        max-width: 200px;
+        max-height: 150px;
         -o-object-fit: cover;
         object-fit: cover;
         -o-object-position: center;
@@ -115,11 +115,11 @@ body {
     transform: translateX(-50%);
 }
 
-.snackbar.show {
-    visibility: visible;
-    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-    animation: fadein 0.5s, fadeout 0.5s 2.5s;
-}
+    .snackbar.show {
+        visibility: visible;
+        -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    }
 
 
 .invoice-logo img {
@@ -127,4 +127,15 @@ body {
     max-width: 200px;
     max-height: 150px;
     overflow: hidden;
+    border: 1px solid #ced4da;
+}
+
+.items-header {
+    background: #074f8d;
+    color: white;
+}
+
+.invoice-container {
+    border: 1px solid #ced4da;
+    padding:20px;
 }

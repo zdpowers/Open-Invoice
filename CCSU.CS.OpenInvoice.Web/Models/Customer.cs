@@ -1,4 +1,6 @@
-﻿namespace CCSU.CS.OpenInvoice.Web.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace CCSU.CS.OpenInvoice.Web.Models
 {
     public class Customer
     {
@@ -23,5 +25,17 @@
         public string Email { get; set; }
 
         public string? Notes { get; set; }
+
+        [NotMapped]
+        public string CompleteAddress
+        {
+
+            get
+            {
+                var address = Address + (string.IsNullOrEmpty(Address2) ? "" : " " + Address2);
+                return Name + "\n" + address + "\n" +  City + ", " + State + " " + Zip;
+            }
+
+        }
     }
 }

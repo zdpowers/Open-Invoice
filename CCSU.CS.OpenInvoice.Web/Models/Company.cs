@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CCSU.CS.OpenInvoice.Web.Models
 {
@@ -32,6 +33,16 @@ namespace CCSU.CS.OpenInvoice.Web.Models
         public string? Terms { get; set; }
 
         public string Logo { get; set; }
+
+        [NotMapped]
+        public string CompleteAddress {
+
+            get {
+                var address = Address + (string.IsNullOrEmpty(Address2) ? "" : " " + Address2);
+                return Name + "\n" + address + "\n" + City + ", " + State + " " + Zip;
+            }
+        
+        }
 
 
 
