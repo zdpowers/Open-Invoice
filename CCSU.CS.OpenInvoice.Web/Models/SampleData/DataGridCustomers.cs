@@ -15,7 +15,7 @@ namespace CCSU.CS.OpenInvoice.Web.Models.SampleData
         public static IEnumerable<Customer> DataGridCustomers = new[] {
             new Customer
             {
-                CustomerId = 1,
+                Id = 1,
                 Name = "Julie Shevchenko",
                 Address = "123 Test Ln",
                 Address2 = "",
@@ -28,7 +28,7 @@ namespace CCSU.CS.OpenInvoice.Web.Models.SampleData
             },
             new Customer
             {
-                CustomerId = 2,
+                Id = 2,
                 Name = "John Doe",
                 Address = "456 Test Ln",
                 Address2 = "",
@@ -41,7 +41,7 @@ namespace CCSU.CS.OpenInvoice.Web.Models.SampleData
             },
             new Customer
             {
-                CustomerId = 3,
+                Id = 3,
                 Name = "Jane Doe",
                 Address = "456 Test Ln",
                 Address2 = "",

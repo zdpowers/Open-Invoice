@@ -21,7 +21,7 @@ namespace CCSU.CS.OpenInvoice.Web.Controllers
 
             if(ModelState.IsValid) {
 
-                if (company.CompanyId > 0)
+                if (company.Id > 0)
                 {
                     _invoicingContext.Companies.Update(company);
                 }
@@ -34,7 +34,7 @@ namespace CCSU.CS.OpenInvoice.Web.Controllers
 
                 await _invoicingContext.SaveChangesAsync();
 
-                return CreatedAtAction("GetCompany", new { id = company.CompanyId }, company);
+                return CreatedAtAction("GetCompany", new { id = company.Id }, company);
             }
 
             return Ok(company);
