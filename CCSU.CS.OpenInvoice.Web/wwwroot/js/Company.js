@@ -1,40 +1,6 @@
 ﻿let companyFormInstance;
 let companyLogo;
 
-function companyForm_onInitialized(e) {
-    companyFormInstance = e.component;
-}
-
-function companyForm_onContentReady(e) {
-
-    var logo = companyFormInstance.getEditor("Logo").option("value")
-    if (!logo) {
-
-        $('#company-logo')
-            .attr('src', "/images/nologo.jpg")
-
-    }
-    else {
-        $('#company-logo')
-            .attr('src', logo)
-    }
-}
-
-function fileUploader_onValueChanged(e) {
-    var files = e.value;
-    if (files && files.length) {
-        var reader = new FileReader();
-        reader.onload = function (arg) {
-            $('#company-logo').attr('src', arg.target.result);
-            companyFormInstance.getEditor("Logo").option("value", arg.target.result)
-            //companyLogo = arg.target.result
-
-
-        };
-        reader.readAsDataURL(files[0]);
-    }
-}
-
 document.addEventListener("change", function (event) {
     if (event.target.classList.contains("uploadProfileInput")) {
         var triggerInput = event.target;
