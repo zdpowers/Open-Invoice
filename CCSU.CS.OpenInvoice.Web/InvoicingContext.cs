@@ -7,6 +7,8 @@ namespace CCSU.CS.OpenInvoice.Web
     {
         public DbSet<Company> Companies { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<LineItem> LineItems { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
 
 
         public string DbPath { get; }

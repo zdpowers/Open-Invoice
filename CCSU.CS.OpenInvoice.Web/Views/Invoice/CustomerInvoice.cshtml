@@ -1,0 +1,167 @@
+﻿@model Invoice
+<div class="invoice-container">
+
+
+    <form id="company-form">
+
+        @Html.AntiForgeryToken()
+
+        <div class="invoice-header">
+            <div class="form-row">
+                <div class="form-group col-md-9 profile-pic-wrapper align-self-start">
+                    <div class="invoice-logo">
+                        <!-- uploaded pic shown here -->
+                        <img id="profilePic" class="inoice-pic" src="@Model.Company.Logo">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <h1>INVOICE</h1>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">#</div>
+                            </div>
+                            <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Invoice Number">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-5">
+                    <div class="form-row form-group">
+                        <label for="exampleFormControlTextarea1">From</label>
+                        <textarea class="form-control" asp-for="Company.CompleteAddress" rows="3"></textarea>
+                    </div>
+                    <div class="form-row form-group">
+                        <label for="exampleFormControlTextarea1">Bill To</label>
+                        <textarea class="form-control" asp-for="Customer.CompleteAddress" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-4 offset-md-3">
+                    <div class="form-row form-group">
+                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Date</label>
+                        <div class="col-sm-8">
+                            <input type="email" class="form-control form-control-sm" asp-for="Date">
+                        </div>
+                    </div>
+                    <div class="form-row form-group">
+                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Payment Terms</label>
+                        <div class="col-sm-8">
+                            <input type="email" class="form-control form-control-sm" asp-for="PaymentTerms">
+                        </div>
+                    </div>
+                    <div class="form-row form-group">
+                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Due Date</label>
+                        <div class="col-sm-8">
+                            <input type="email" class="form-control form-control-sm" asp-for="DueDate">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="invoice-items">
+            <div class="form-row mt-3 items-header">
+                <div class="col-5"><h5>Item Name</h5></div>
+                <div class="col"><h5>Quanity</h5></div>
+                <div class="col"><h5>Price per Unit</h5></div>
+                <div class="col"><h5>Total Price</h5></div>
+                <div class="col"></div>
+            </div>
+
+            <!--FORM "TABLE"-->
+            <div id="invoice-form-body">
+                <div class="line-item form-row my-1" id="line-item">
+                    <!--ITEM NAME-->
+                    <div class="col-5">
+                        <input name="itemname" type="text" class="form-control" placeholder="Item" required>
+                        <div class="invalid-feedback">Enter an Item.</div>
+                    </div>
+                    <!--ITEM QUANTITY-->
+                    <div class="col">
+                        <input name="itemquantity" type="number" min="0" class="form-control" placeholder="0" required>
+                        <div class="invalid-feedback">Enter a Quantity.</div>
+                    </div>
+                    <!--UNIT PRICE-->
+                    <div class="col input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">$</div>
+                        </div>
+                        <input name="unitprice" type="number" min="0.00" step=".01" class="form-control" placeholder="0.00" required>
+                        <div class="invalid-feedback">Enter a Unit Price.</div>
+                    </div>
+                    <!--TOTAL PRICE-->
+                    <div class="col input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">$</div>
+                        </div>
+                        <input name="totalprice" type="number" min="0.00" step=".01" class="form-control" placeholder="0.00" required>
+                        <div class="invalid-feedback">Enter a Total Price.</div>
+                    </div>
+                    <!--REMOVE ITEM-->
+                    <div class="col text-center">
+                        <button type="button" class="btn btn-outline-danger btn-invoice-remove">Remove</button>
+                    </div>
+                </div>
+            </div>
+            <button type="button" id="invoice-btn-add" class="btn btn-success mt-3" onclick="fakeSubmit()">Add Line Item</button>
+        </div>
+        <div class="invoice-footer mt-3">
+            <div class="form-row">
+                <div class="col-md-5">
+                    <div class="form-row form-group">
+                        <label for="exampleFormControlTextarea1">Notes</label>
+                        <textarea class="form-control" asp-for="Company.Notes" rows="3"></textarea>
+                    </div>
+                    <div class="form-row form-group">
+                        <label for="exampleFormControlTextarea1">Terms</label>
+                        <textarea class="form-control" asp-for="Company.Terms" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-4 offset-md-3">
+                    <div class="form-row form-group">
+                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Subtotal</label>
+                        <div class="col input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">$</div>
+                            </div>
+                            <input name="unitprice" type="number" min="0.00" step=".01" class="form-control" placeholder="0.00" required>
+                        </div>
+                    </div>
+                    <div class="form-row form-group">
+                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Tax</label>
+                        <div class="col input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">%</div>
+                            </div>
+                            <input name="unitprice" type="number" min="0.00" step=".01" class="form-control" placeholder="0.00" required>
+                        </div>
+                    </div>
+                    <div class="form-row form-group">
+                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Total</label>
+                        <div class="col input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">$</div>
+                            </div>
+                            <input name="unitprice" type="number" min="0.00" step=".01" class="form-control" placeholder="0.00" required>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+</div>
+@section Scripts{
+
+    <script src="~/js/Invoice.js"></script>
+
+}
