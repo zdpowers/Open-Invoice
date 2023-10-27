@@ -89,7 +89,6 @@ function convertFormToJSON(form) {
         }, {});
 }
 
-
 function submitForm(formData) {
 
     let headers = {};
@@ -112,10 +111,5 @@ function submitForm(formData) {
             alert('Request Status: ' + xhr.status + '; Status Text: ' + textStatus + '; Error: ' + errorThrown);
         }
     });
-
-
-
-
-
 
 }

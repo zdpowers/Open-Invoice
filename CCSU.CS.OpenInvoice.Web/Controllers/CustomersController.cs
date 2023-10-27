@@ -4,22 +4,50 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace CCSU.CS.OpenInvoice.Web.Controllers
-{
+{ 
     [Route("api/[controller]")]
+    [ApiController]
     public class CustomersController : ControllerBase
     {
+
         private readonly InvoicingContext _invoicingContext;
         public CustomersController(InvoicingContext invoicingContext)
         {
             _invoicingContext = invoicingContext;
         }
-
-        [HttpGet]
-        public JsonResult GetCustomers()
+        [HttpPost]
+        [Route("Save")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult<Customer>> Save(Customer customer)
         {
-            var customers = _invoicingContext.Customers.ToList();
-            var serializedCustomers = JsonConvert.SerializeObject(customers);
-            return new JsonResult(serializedCustomers);
+            if (ModelState.IsValid)
+            {
+
+                if (customer.Id > 0)
+                {
+                    _invoicingContext.Customers.Update(customer);
+                }
+                else
+                {
+
+                    var createdCustomer = _invoicingContext.Customers.Add(customer);
+                }
+                await _invoicingContext.SaveChangesAsync();
+                return CreatedAtAction("GetCustomer", new { id = customer.Id }, customer);
+            }
+
+            return Ok(customer);
         }
+
+
+
+        //[HttpGet]
+        //public JsonResult GetCustomers()
+        //{
+        //    var customers = _invoicingContext.Customers.ToList();
+        //    var serializedCustomers = JsonConvert.SerializeObject(customers);
+        //    return new JsonResult(serializedCustomers);
+        //}
     }
 }
+
