@@ -74,3 +74,26 @@ function submitForm(formData) {
         ]
     });
 });*/
+
+$.ajax({
+    'url': "/api/Customers",
+    'method': "GET",
+    'contentType': 'application/json'
+}).done(function (data) {
+    $('#example').dataTable({
+        "aaData": data,
+        "columns": [
+            { data: 'Id' },
+            { data: 'Name' },
+            { data: 'Contact' },
+            { data: 'Address' },
+            { data: 'Address2' },
+            { data: 'City' },
+            { data: 'State' },
+            { data: 'Zip' },
+            { data: 'Country' },
+            { data: 'Phone' },
+            { data: 'Email' }
+        ]
+    });
+});
