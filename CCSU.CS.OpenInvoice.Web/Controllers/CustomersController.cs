@@ -56,7 +56,7 @@ namespace CCSU.CS.OpenInvoice.Web.Controllers
         }
 
         [HttpGet]
-        [Route("[Id]")]
+        [Route("{id:int}")]
         public IActionResult GetCustomerById(int id)
         {
             try
