@@ -90,6 +90,8 @@ function convertFormToJSON(form) {
 }
 
 function submitForm(formData) {
+    console.log(formData);
+    console.log(JSON.stringify(formData));
 
     let headers = {};
     let antiForgeryToken = $("input[name=__RequestVerificationToken]").val();

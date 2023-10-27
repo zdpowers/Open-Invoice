@@ -1,5 +1,20 @@
 ﻿@model Customer
 
+@section Scripts{
+
+    <script src="~/js/Customer.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+
+}
+
 <h3 class="page-title">Customer Information</h3>
 
 @*
@@ -8,6 +23,8 @@
     https://stackoverflow.com/questions/17142790/bootstrap-modal-not-working-at-all
     https://datatables.net/examples/ajax/objects.html
 *@
+
+@Html.AntiForgeryToken()
 
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
@@ -24,71 +41,69 @@
             </div>
             <form id="customer-form">
                 <div class="modal-body">
-
-                        <div class="row align-items-start">
-                            <div class="col">
-                                <label>Name:</label>
-                                <input type="text" class="form-control" asp-for="Name">
-                            </div>
-                            <div class="col">
-                                <label>Contact:</label>
-                                <input type="text" class="form-control" >
-                            </div>
-                            <div class="col">
-                                <label>Address:</label>
-                                <input type="text" class="form-control" asp-for="Contact">
-                            </div>
-                            <div class="col">
-                                <label>Address 2:</label>
-                                <input type="text" class="form-control" asp-for="Address">
-                            </div>
+                    <!--<input type="hidden" class="form-control" value="1" asp-for="Id">-->
+                    <div class="row align-items-start">
+                        <div class="col">
+                            <label>Name:</label>
+                            <input type="text" class="form-control" asp-for="Name">
                         </div>
-
-                        <div class="row align-items-start">
-                            <div class="col">
-                                <label>City:</label>
-                                <input type="text" class="form-control" asp-for="Address2">
-                            </div>
-                            <div class="col">
-                                <label>State:</label>
-                                <input type="text" class="form-control" asp-for="City">
-                            </div>
-                            <div class="col">
-                                <label>Zip Code:</label>
-                                <input type="text" class="form-control" asp-for="Zip">
-                            </div>
-                            <div class="col">
-                                <label>Country:</label>
-                                <input type="text" class="form-control" asp-for="Country">
-                            </div>
+                        <div class="col">
+                            <label>Contact:</label>
+                            <input type="text" class="form-control" asp-for="Contact">
                         </div>
-
-                        <div class="row align-items-start">
-                            <div class="col">
-                                <label>Phone:</label>
-                                <input type="text" class="form-control" asp-for="Phone">
-                            </div>
-                            <div class="col">
-                                <label>Email Address:</label>
-                                <input type="text" class="form-control" asp-for="Email">
-                            </div>
-                            <div class="col">
-                            </div>
-                            <div class="col">
-                            </div>
+                        <div class="col">
+                            <label>Address:</label>
+                            <input type="text" class="form-control" asp-for="Address">
                         </div>
-
-                        <div class="row align-items-start">
-                            <div class="col">
-                                <label>Notes:</label>
-                                <textarea class="form-control" asp-for="Notes"></textarea>
-                            </div>
+                        <div class="col">
+                            <label>Address 2:</label>
+                            <input type="text" class="form-control" asp-for="Address2">
                         </div>
+                    </div>
 
-                    <input type="hidden" class="form-control" asp-for="Id">
+                    <div class="row align-items-start">
+                        <div class="col">
+                            <label>City:</label>
+                            <input type="text" class="form-control" asp-for="City">
+                        </div>
+                        <div class="col">
+                            <label>State:</label>
+                            <input type="text" class="form-control" asp-for="State">
+                        </div>
+                        <div class="col">
+                            <label>Zip Code:</label>
+                            <input type="text" class="form-control" asp-for="Zip">
+                        </div>
+                        <div class="col">
+                            <label>Country:</label>
+                            <input type="text" class="form-control" asp-for="Country">
+                        </div>
+                    </div>
+
+                    <div class="row align-items-start">
+                        <div class="col">
+                            <label>Phone:</label>
+                            <input type="text" class="form-control" asp-for="Phone">
+                        </div>
+                        <div class="col">
+                            <label>Email Address:</label>
+                            <input type="text" class="form-control" asp-for="Email">
+                        </div>
+                        <div class="col">
+                        </div>
+                        <div class="col">
+                        </div>
+                    </div>
+
+                    <div class="row align-items-start">
+                        <div class="col">
+                            <label>Notes:</label>
+                            <textarea class="form-control" asp-for="Notes"></textarea>
+                        </div>
+                    </div>
                 </div>
 
-               
+
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -107,7 +122,7 @@
 <table id="example" class="table table-striped" style="width:100%">
     <thead>
         <tr>
-            <th>CustomerId</th>
+            <th>Id</th>
             <th>Name</th>
             <th>Contact</th>
             <th>Address</th>
@@ -121,21 +136,21 @@
         </tr>
     </thead>
     @*  <tbody>
-    <tr>
-    <td>Tiger Nixon</td>
-    <td>123 Test Ln</td>
-    <td></td>
-    <td>Testville</td>
-    <td>CT</td>
-    <td>12345</td>
-    <td>USA</td>
-    <td>123-456-7890</td>
-    <td>tigernixon@gmail.com</td>
-    </tr>
-    </tbody> *@
+        <tr>
+        <td>Tiger Nixon</td>
+        <td>123 Test Ln</td>
+        <td></td>
+        <td>Testville</td>
+        <td>CT</td>
+        <td>12345</td>
+        <td>USA</td>
+        <td>123-456-7890</td>
+        <td>tigernixon@gmail.com</td>
+        </tr>
+        </tbody> *@
     <tfoot>
         <tr>
-            <th>CustomerId</th>
+            <th>Id</th>
             <th>Name</th>
             <th>Contact</th>
             <th>Address</th>
@@ -149,13 +164,3 @@
         </tr>
     </tfoot>
 </table>
-
-@section Scripts{
-
-    <script src="~/js/Customer.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-
-}

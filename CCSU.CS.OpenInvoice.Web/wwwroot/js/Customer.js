@@ -18,6 +18,7 @@ $("#customer-form").on("submit", function (e) {
 });
 
 function convertFormToJSON(form) {
+    //console.log("Hello from inside Customer.js convertFormToJSON");
     return $(form)
         .serializeArray()
         .reduce(function (json, { name, value }) {
@@ -27,7 +28,9 @@ function convertFormToJSON(form) {
 }
 
 function submitForm(formData) {
-
+    //console.log("Hello from inside Customer.js submitForm");
+    console.log(formData);
+    console.log(JSON.stringify(formData));
     let headers = {};
     let antiForgeryToken = $("input[name=__RequestVerificationToken]").val();
 
@@ -44,31 +47,30 @@ function submitForm(formData) {
             alert("Success")
         },
         error: function (xhr, textStatus, errorThrown) {
-
             alert('Request Status: ' + xhr.status + '; Status Text: ' + textStatus + '; Error: ' + errorThrown);
         }
     });
 
 }
 
-//$(document).ready(function () {
-//    $('#example').DataTable({
-//        "ajax": {
-//            "url": "/api/customers",
-//            "dataSrc": ""
-//        },
-//        columns: [
-//            { data: 'CustomerId' },
-//            { data: 'Name' },
-//            { data: 'Contact' },
-//            { data: 'Address' },
-//            { data: 'Address2' },
-//            { data: 'City' },
-//            { data: 'State' },
-//            { data: 'Zip' },
-//            { data: 'Country' },
-//            { data: 'Phone' },
-//            { data: 'Email' }
-//        ]
-//    });
-//});
+/*$(document).ready(function () {
+    $('#example').DataTable({
+        "ajax": {
+            "url": "/api/Customers",
+            "dataSrc": ""
+        },
+        columns: [
+            { data: 'Id' },
+            { data: 'Name' },
+            { data: 'Contact' },
+            { data: 'Address' },
+            { data: 'Address2' },
+            { data: 'City' },
+            { data: 'State' },
+            { data: 'Zip' },
+            { data: 'Country' },
+            { data: 'Phone' },
+            { data: 'Email' }
+        ]
+    });
+});*/
