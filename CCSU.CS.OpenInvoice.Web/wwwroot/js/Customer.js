@@ -44,7 +44,8 @@ function submitForm(formData) {
         dataType: "json",
         data: JSON.stringify(formData),
         success: function (data) {
-            alert("Success")
+            //alert("Success");
+            location.reload(true);
         },
         error: function (xhr, textStatus, errorThrown) {
             alert('Request Status: ' + xhr.status + '; Status Text: ' + textStatus + '; Error: ' + errorThrown);

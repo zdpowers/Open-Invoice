@@ -54,6 +54,21 @@ namespace CCSU.CS.OpenInvoice.Web.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
+        [HttpGet]
+        [Route("[Id]")]
+        public IActionResult GetCustomerById(int id)
+        {
+            try
+            {
+                var customer = _invoicingContext.Customers.Find(id);
+                return Ok(customer);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
     }
 }
 
