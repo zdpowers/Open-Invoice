@@ -26,12 +26,12 @@
 
 @Html.AntiForgeryToken()
 
-<!-- Button trigger modal -->
+<!-- Button Trigger Customer Modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
     Add Customer
 </button>
 
-<!-- Modal -->
+<!-- Add Customer Modal -->
 <div class="modal fade" id="myModal" data-bs-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -41,7 +41,6 @@
             </div>
             <form id="customer-form">
                 <div class="modal-body">
-                    <!--<input type="hidden" class="form-control" value="1" asp-for="Id">-->
                     <div class="row align-items-start">
                         <div class="col">
                             <label>Name:</label>
@@ -133,21 +132,10 @@
             <th>Country</th>
             <th>Phone</th>
             <th>Email</th>
+            <th></th>
         </tr>
     </thead>
-    @*  <tbody>
-        <tr>
-        <td>Tiger Nixon</td>
-        <td>123 Test Ln</td>
-        <td></td>
-        <td>Testville</td>
-        <td>CT</td>
-        <td>12345</td>
-        <td>USA</td>
-        <td>123-456-7890</td>
-        <td>tigernixon@gmail.com</td>
-        </tr>
-        </tbody> *@
+ 
     <tfoot>
         <tr>
             <th>Id</th>
@@ -161,6 +149,7 @@
             <th>Country</th>
             <th>Phone</th>
             <th>Email</th>
+            <th></th>
         </tr>
     </tfoot>
 </table>

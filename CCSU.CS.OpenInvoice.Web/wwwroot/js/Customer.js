@@ -18,7 +18,6 @@ $("#customer-form").on("submit", function (e) {
 });
 
 function convertFormToJSON(form) {
-    //console.log("Hello from inside Customer.js convertFormToJSON");
     return $(form)
         .serializeArray()
         .reduce(function (json, { name, value }) {
@@ -28,7 +27,6 @@ function convertFormToJSON(form) {
 }
 
 function submitForm(formData) {
-    //console.log("Hello from inside Customer.js submitForm");
     console.log(formData);
     console.log(JSON.stringify(formData));
     let headers = {};
@@ -54,28 +52,6 @@ function submitForm(formData) {
 
 }
 
-/*$(document).ready(function () {
-    $('#example').DataTable({
-        "ajax": {
-            "url": "/api/Customers",
-            "dataSrc": ""
-        },
-        columns: [
-            { data: 'Id' },
-            { data: 'Name' },
-            { data: 'Contact' },
-            { data: 'Address' },
-            { data: 'Address2' },
-            { data: 'City' },
-            { data: 'State' },
-            { data: 'Zip' },
-            { data: 'Country' },
-            { data: 'Phone' },
-            { data: 'Email' }
-        ]
-    });
-});*/
-
 $.ajax({
     'url': "/api/Customers",
     'method': "GET",
@@ -94,7 +70,13 @@ $.ajax({
             { data: 'Zip' },
             { data: 'Country' },
             { data: 'Phone' },
-            { data: 'Email' }
+            { data: 'Email' },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return '<button type="button" class="btn btn-link" data-toggle="modal" data-target="#myModal">Edit</button> ';
+                }
+            }
         ]
     });
 });
