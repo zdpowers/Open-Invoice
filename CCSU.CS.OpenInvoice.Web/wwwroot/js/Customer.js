@@ -23,9 +23,10 @@ $("#customer-form").on("submit", function (e) {
     }
 });
 
-$("#customer-form").on("edit", function (){
-    $("#customerName").val("Test Name :D");
-});
+/*$("#customer-form").on("edit", function () {
+    console.log("Hello from editting modal!");
+    //$("#customerName").val("Test Name :D");
+});*/
 
 //$(document).ready(function () {
 //    $("#modalEdit").click(function () {
@@ -96,8 +97,23 @@ $.ajax({
             {
                 data: null,
                 render: function (data, type, row) {
-                    return '<button type="edit" class="btn btn-link" data-toggle="modal" data-target="#myModal">Edit</button>';
-                    // class="btn btn-link" id="modalEdit"
+                    $("#edit").click(function (e) {
+                        //console.log($('#example').DataTable().row().data());
+                        console.log(row);
+                    });
+
+                    /*counter = 1;
+                    myButton = '';
+                    row().forEach(myFunction);
+                    function myFunction() {
+                        myButton = '<button type="edit" id="edit'
+                            + counter + '" class="btn btn-link" data-toggle="modal" data-target="#myModal" data-whatever="editing">Edit</button>';
+                        counter += 1;
+                        return myButton;
+                    }*/
+
+                    return '<button type="edit" id="edit'
+                        + '' + '" class="btn btn-link" data-toggle="modal" data-target="#myModal" data-whatever="editing">Edit</button>';
                 }
             }
         ]
