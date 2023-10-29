@@ -1,3 +1,9 @@
+/*
+    References:
+    https://datatables.net/forums/discussion/47910/add-button-column
+    https://stackoverflow.com/questions/19981949/how-to-make-a-button-in-bootstrap-look-like-a-normal-link-in-nav-tabs
+*/
+
 const myModal = document.getElementById('myModal')
 const myInput = document.getElementById('myInput')
 
@@ -16,6 +22,22 @@ $("#customer-form").on("submit", function (e) {
         submitForm(json);
     }
 });
+
+$("#customer-form").on("edit", function (){
+    $("#customerName").val("Test Name :D");
+});
+
+//$(document).ready(function () {
+//    $("#modalEdit").click(function () {
+//        $('#myModal').modal('show');
+//        $("#customerName").val("Test Name :D");
+//    });
+//});
+
+//function fillAddCustomerModal() {
+//    $('#myModal').modal('show');
+//    $("#customerName").val("Test Name :D");
+//}
 
 function convertFormToJSON(form) {
     return $(form)
@@ -74,7 +96,8 @@ $.ajax({
             {
                 data: null,
                 render: function (data, type, row) {
-                    return '<button type="button" class="btn btn-link" data-toggle="modal" data-target="#myModal">Edit</button> ';
+                    return '<button type="edit" class="btn btn-link" data-toggle="modal" data-target="#myModal">Edit</button>';
+                    // class="btn btn-link" id="modalEdit"
                 }
             }
         ]
