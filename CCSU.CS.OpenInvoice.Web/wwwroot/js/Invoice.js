@@ -40,6 +40,11 @@ function updateTotalAfterTax() {
 
 $(document).ready(function () {
 
+    $('.datepicker').datepicker({
+        orientation: 'bottom',
+        autoclose: 'true'
+    });
+
     $("#invoice-btn-add").click(function () {
         var cloned = $('.line-item').first().clone()
         cloned.find('input[type="text"], input[type="number"]').val('');
