@@ -11,9 +11,13 @@
 
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/select/1.7.0/js/dataTables.select.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 
 }
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/select/1.7.0/css/select.dataTables.min.css">
 
 <h3 class="page-title">Customer Information</h3>
 
@@ -27,8 +31,12 @@
 @Html.AntiForgeryToken()
 
 <!-- Button Trigger Customer Modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+<button type="button" id="addButton" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
     Add Customer
+</button>
+
+<button type="button" id="ultimateEditButton" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+    Edit Selected Customer
 </button>
 
 <!-- Add Customer Modal -->
@@ -132,10 +140,10 @@
             <th>Country</th>
             <th>Phone</th>
             <th>Email</th>
-            <th></th>
+            <!--<th></th>-->
         </tr>
     </thead>
- 
+
     <tfoot>
         <tr>
             <th>Id</th>
@@ -149,7 +157,7 @@
             <th>Country</th>
             <th>Phone</th>
             <th>Email</th>
-            <th></th>
+            <!--<th></th>-->
         </tr>
     </tfoot>
 </table>

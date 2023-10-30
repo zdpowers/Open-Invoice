@@ -75,12 +75,38 @@ function submitForm(formData) {
 
 }
 
+var oTable;
+
 $.ajax({
     'url': "/api/Customers",
     'method': "GET",
     'contentType': 'application/json'
 }).done(function (data) {
     $('#example').dataTable({
+        select: {
+            style: 'single'
+        },
+        "initComplete": function (settings, json) {
+            oTable = $('#example').dataTable();
+
+            oTable.on('click', 'tbody tr', (e) => {
+                let classList = e.currentTarget.classList;
+
+                if (classList.contains('selected')) {
+                    classList.remove('selected');
+                }
+                else {
+                    //oTable.rows('.selected').nodes().each((row) => row.classList.remove('selected'));
+                    classList.add('selected');
+                }
+            });
+
+            document.querySelector('#ultimateEditButton').addEventListener('click', function () {
+                //table.row('.selected').remove().draw(false);
+                console.log(oTable.api().row('.selected').data());
+            });
+            //alert('DataTables has finished its initialisation.');
+        },
         "aaData": data,
         "columns": [
             { data: 'Id' },
@@ -93,7 +119,22 @@ $.ajax({
             { data: 'Zip' },
             { data: 'Country' },
             { data: 'Phone' },
-            { data: 'Email' },
+            { data: 'Email' }/*,
+            {
+                data: null,
+                render: function (data, type, row) {
+                    document.getElementById("example").addEventListener("click", function (e) {
+                        const tgt = e.target;
+                        if (tgt.classList.contains("editButton")) {
+                            e.preventDefault(); // stop the button if not type=button 
+                            console.log("Hello from A editButton!");
+                            console.log(row);
+                        }
+                    });
+
+                    return '<button type="edit" class="btn btn-link editButton" data-toggle="modal" data-target="#myModal" data-whatever="editing">Edit</button>';
+                }
+            }
             {
                 data: null,
                 render: function (data, type, row) {
@@ -102,7 +143,7 @@ $.ajax({
                         console.log(row);
                     });
 
-                    /*counter = 1;
+                    counter = 1;
                     myButton = '';
                     row().forEach(myFunction);
                     function myFunction() {
@@ -110,12 +151,22 @@ $.ajax({
                             + counter + '" class="btn btn-link" data-toggle="modal" data-target="#myModal" data-whatever="editing">Edit</button>';
                         counter += 1;
                         return myButton;
-                    }*/
+                    }
 
                     return '<button type="edit" id="edit'
                         + '' + '" class="btn btn-link" data-toggle="modal" data-target="#myModal" data-whatever="editing">Edit</button>';
                 }
-            }
+            }*/
         ]
-    });
+    })/*.on('click', 'tbody tr', (e) => {
+        let classList = e.currentTarget.classList;
+
+        if (classList.contains('selected')) {
+            classList.remove('selected');
+        }
+        else {
+            rows('.selected').nodes().each((row1) => row1.classList.remove('selected'));
+            classList.add('selected');
+        }
+    })*/;
 });
