@@ -1,0 +1,37 @@
+{
+  "data": [
+	{
+		"InvoiceId": 1,
+		"Date": "10/20/2023",
+		"DueDate": "10/30/2023",
+		"PaymentTerms": "No Payment Terms",
+		"CompanyId": 1,
+		"Company": "Company 1",
+		"CustomerId": 1,
+		"Customer": "Customer 1",
+		"Items": "",
+	},
+	{
+		"InvoiceId": 2,
+		"Date": "10/21/2023",
+		"DueDate": "10/31/2023",
+		"PaymentTerms": "PaymentTerms",
+		"CompanyId": 1,
+		"Company": "Company 1",
+		"CustomerId": 2,
+		"Customer": "Customer 2",
+		"Items": "",
+	},
+	{
+		"InvoiceId": 3,
+		"Date": "10/22/2023",
+		"DueDate": "11/01/2023",
+		"PaymentTerms": "Payment Terms",
+		"CompanyId": 1,
+		"Company": "Company 1",
+		"CustomerId": 2,
+		"Customer": "Customer 3",
+		"Items": "",
+	}
+  ]
+}
