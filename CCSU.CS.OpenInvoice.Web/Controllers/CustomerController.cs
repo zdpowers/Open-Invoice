@@ -6,39 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 namespace CCSU.CS.OpenInvoice.Web.Controllers {
 
 	public class CustomerController : Controller {
+        private readonly InvoicingContext _invoicingContext;
+        public CustomerController(InvoicingContext invoicingContext)
+        {
+            _invoicingContext = invoicingContext;
+        }
+
         public IActionResult Index() {
-            // Make customer object and pass to view
-            /*var customer = new Customer
-            {
-                Name = "Julie Shevchenko",
-                Address = "123 Test Ln",
-                Address2 = "",
-                City = "Testville",
-                State = "CT",
-                Zip = "12345",
-                Country = "USA",
-                Phone = "123-456-7890",
 
-            };
-            var customer2 = new Customer
-            {
-                Name = "John Shevchenko",
-                Address = "123 Test Ln",
-                Address2 = "",
-                City = "Testville",
-                State = "CT",
-                Zip = "12345",
-                Country = "USA",
-                Phone = "123-456-7890",
+            return View();
 
-            };
-            Customer[] customers = { customer, customer2 };
-
-            IEnumerable<Customer> c = customers;
-            return View(c);*/
-
-            var csd = CustomerSampleData.DataGridCustomers;
-            return View(csd);
         }
 
     }
