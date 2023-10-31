@@ -103,7 +103,7 @@ $.ajax({
 
             document.querySelector('#ultimateEditButton').addEventListener('click', function () {
                 //table.row('.selected').remove().draw(false);
-                console.log(oTable.api().row('.selected').data());
+                console.log(oTable.api().row('.selected').data().Id);
             });
             //alert('DataTables has finished its initialisation.');
         },
