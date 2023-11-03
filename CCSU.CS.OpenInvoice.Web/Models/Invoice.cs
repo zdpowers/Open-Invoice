@@ -4,8 +4,8 @@
     {
         public int Id { get; set; }
 
-        public DateTime Date { get; set; } = DateTime.Now;
-        public DateTime DueDate { get; set; }
+        public DateTime? Date { get; set; } = DateTime.Now;
+        public DateTime? DueDate { get; set; }
 
         public string PaymentTerms { get; set; }
         public int CompanyId { get; set; }
