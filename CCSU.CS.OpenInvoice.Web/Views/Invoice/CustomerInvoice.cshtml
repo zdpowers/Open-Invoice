@@ -80,12 +80,12 @@
                 <div class="line-item form-row my-1">
                     <!--ITEM NAME-->
                     <div class="col-5">
-                        <input name="itemname" type="text" class="form-control" placeholder="Item" required>
+                        <input name="Description" type="text" class="form-control" placeholder="Item" required>
                         <div class="invalid-feedback">Enter an Item.</div>
                     </div>
                     <!--ITEM QUANTITY-->
                     <div class="col">
-                        <input name="itemquantity" type="number" min="0" class="form-control row-price" placeholder="0" required>
+                        <input name="Qty" type="number" min="0" class="form-control row-price" placeholder="0" required>
                         <div class="invalid-feedback">Enter a Quantity.</div>
                     </div>
                     <!--UNIT PRICE-->
@@ -93,7 +93,7 @@
                         <div class="input-group-prepend">
                             <div class="input-group-text">$</div>
                         </div>
-                        <input name="unitprice" type="number" min="0.00" step=".01" class="form-control row-price" placeholder="0.00" required>
+                        <input name="Price" type="number" min="0.00" step=".01" class="form-control row-price" placeholder="0.00" required>
                         <div class="invalid-feedback">Enter a Unit Price.</div>
                     </div>
                     <!--TOTAL PRICE-->
@@ -101,7 +101,7 @@
                         <div class="input-group-prepend">
                             <div class="input-group-text">$</div>
                         </div>
-                        <input name="totalprice" type="number" min="0.00" step=".01" class="form-control" placeholder="0.00" required readonly>
+                        <input name="TotalPrice" type="number" min="0.00" step=".01" class="form-control" placeholder="0.00" required readonly>
                         <div class="invalid-feedback">Enter a Total Price.</div>
                     </div>
                     <!--REMOVE ITEM-->
@@ -154,10 +154,10 @@
                     </div>
                     <div class="form-row form-group mt-5" data-html2canvas-ignore>
                         <div class="col offset-md-4">
-                            <button class="btn btn-success"><i class="fa-solid fa-floppy-disk p-1"></i>Save</button>
+                            <button class="btn btn-success" id="invoice-btn-save"><i class="fa-solid fa-floppy-disk p-1"></i>Save</button>
                         </div>
                         <div class="col">
-                            <button class="btn btn-primary"><i class="fa-solid fa-print p-1"></i>Print</button>
+                            <button class="btn btn-primary" id="invoice-btn-print"><i class="fa-solid fa-print p-1"></i>Print</button>
                         </div>
                         
                         

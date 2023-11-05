@@ -1,15 +1,15 @@
 ﻿function updateTotalPrice(row) {
-    var quantity = +$(row).find("[name='itemquantity']").val();
-    var price = +$(row).find("[name='unitprice']").val();
+    var quantity = +$(row).find("[name='Qty']").val();
+    var price = +$(row).find("[name='Price']").val();
     var total = (quantity * price).toFixed(2);
-    $(row).find("[name='totalprice']").val(total);
+    $(row).find("[name='TotalPrice']").val(total);
 }
 
 function updateSubtotal() {
     var subtotal = 0;
 
     $('.line-item').each(function () {
-        var total = parseFloat($(this).find('input[name="totalprice"]').val());
+        var total = parseFloat($(this).find('input[name="TotalPrice"]').val());
         if (!isNaN(total)) {
             subtotal += total;
         }
@@ -42,15 +42,8 @@ function docToPDF() {
 
     var invoiceContent = document.documentElement;
 
-    //var elementsToHide = document.querySelectorAll('.non-print');
-    //elementsToHide.forEach(function (button) {
-    //    button.style.display = 'none'; // Hide the buttons
-    //});
-
-    
-    // Set options for the PDF creation
     var opt = {
-        margin: 10,
+        margin: 1,
         filename: 'invoice.pdf',
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2 },
@@ -62,42 +55,40 @@ function docToPDF() {
 
 }
 
-//function generateFormData() {
+function generateFormData() {
 
-//    let formData = {
+    let formData = {
 
-//        Id: $('input[name="Id"]').val(),
-//        Date: $('input[name="Date"]').val(),
-//        DueDate: $('input[name="DueDate"]').val(),
-//        PaymentTerms: $('input[name="PaymentTerms"]').val(),
-//        From: $('input[name="From"]').val(),
-//        BillTo: $('input[name="BillTo"]').val(),
-//        Notes: $('input[name="Notes"]').val(),
-//        Terms: $('input[name="Terms"]').val(),
-//        SubTotal: $('input[name="SubTotal"]').val(),
-//        Tax: $('input[name="Tax"]').val(),
-//        Total: $('input[name="Total"]').val(),
-//        lineItems: []
-//        $('.line-item').each(function () {
-//            var lineItem = {
-//                Id: $(this).find('input[name="Id"]').val(),
-//                Description: $(this).find('input[name="Description"]').val(),
-//                Qty: $(this).find('input[name="Qty"]').val(),
-//                Price: $(this).find('input[name="Price"]').val(),
-//                TotalPrice: $(this).find('input[name="TotalPrice"]').val(),
-//            };
-//            formData.lineItems.push(lineItem);
-//        });
-
-
-
-
-//    }
-
-//    return formData;
+        Id: $('input[name="Id"]').val(),
+        Date: $('input[name="Date"]').val(),
+        DueDate: $('input[name="DueDate"]').val(),
+        PaymentTerms: $('input[name="PaymentTerms"]').val(),
+        From: $('textarea[name="From"]').val(),
+        BillTo: $('textarea[name="BillTo"]').val(),
+        Notes: $('textarea[name="Notes"]').val(),
+        Terms: $('textarea[name="Terms"]').val(),
+        SubTotal: $('input[name="SubTotal"]').val(),
+        Tax: $('input[name="Tax"]').val(),
+        Total: $('input[name="Total"]').val(),
+        lineItems: []
+     
+    }
+    $('.line-item').each(function () {
+        var lineItem = {
+            Id: $(this).find('input[name="Id"]').val(),
+            Description: $(this).find('input[name="Description"]').val(),
+            Qty: $(this).find('input[name="Qty"]').val(),
+            Price: $(this).find('input[name="Price"]').val(),
+            TotalPrice: $(this).find('input[name="TotalPrice"]').val(),
+        };
+        formData.lineItems.push(lineItem);
+    });
 
 
-//}
+    return formData;
+
+
+}
 
 $(document).ready(function () {
 
@@ -127,7 +118,13 @@ $(document).ready(function () {
         updateTotalAfterTax();
     });
 
-
+    $("#invoice-btn-save").click(function () {
+        let data = generateFormData();
+        console.log(data);
+    });
+    $("#invoice-btn-print").click(function () {
+        docToPDF()
+    });
 
 
 
