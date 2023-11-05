@@ -1,106 +1,45 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model Invoice
+
+@section Scripts{
+
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+    @* <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script> *@
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="~/js/InvoiceList.js"></script>
+
 }
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<div class="container">
-    <h3 class="page-title">Generate Invoice</h3>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdn.datatables.net/rowreorder/1.4.1/css/rowReorder.bootstrap5.min.css" rel="stylesheet" type="text/css" />
 
-    <form class="needs-validation" id="invoice-form" novalidate>
-        <!--CUSTOMER INPUT-->
-        <div class="row">
-            <div class="col-5">
-                <input name="customerName" type="text" class="form-control" placeholder="Enter Customer Name" required>
-                <div class="invalid-feedback">Enter a Customer.</div>
-            </div>
-            <div class="col-5"></div>
-            <div class="col">
-                <button class="addLineItemBtn btn btn-primary" type="button">Add Line Item</button>
-            </div>
-        </div>
+<h3 class="page-title">Invoice History</h3>
 
-        <!--FORM "TABLE" HEADER-->
-        <div class="row mt-3">
-            <div class="col-5"><h5>Item Name</h5></div>
-            <div class="col"><h5>Quanity</h5></div>
-            <div class="col"><h5>Price per Unit</h5></div>
-            <div class="col"><h5>Total Price</h5></div>
-            <div class="col"><h5>Remove</h5></div>
-        </div>
+<table id="invoiceTable" class="table table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>CustomerId</th>
+            <th>Date</th>
+            <th>DueDate</th>
+            <th>Payment Terms</th>
+        </tr>
+    </thead>
 
-        <!--FORM "TABLE"-->
-        <div id="invoice-form-body">
-            <div class="line-item row my-1" id="line-item">
-                <!--ITEM NAME-->
-                <div class="col-5">
-                    <input name="itemname" type="text" class="form-control" placeholder="Item" required>
-                    <div class="invalid-feedback">Enter an Item.</div>
-                </div>
-                <!--ITEM QUANTITY-->
-                <div class="col">
-                    <input name="itemquantity" type="number" min="0" class="form-control" placeholder="0" required>
-                    <div class="invalid-feedback">Enter a Quantity.</div>
-                </div>
-                <!--UNIT PRICE-->
-                <div class="col input-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">$</div>
-                    </div>
-                    <input name="unitprice" type="number" min="0.00" step=".01" class="form-control" placeholder="0.00" required>
-                    <div class="invalid-feedback">Enter a Unit Price.</div>
-                </div>
-                <!--TOTAL PRICE-->
-                <div class="col input-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">$</div>
-                    </div>
-                    <input name="totalprice" type="number" min="0.00" step=".01" class="form-control" placeholder="0.00" required>
-                    <div class="invalid-feedback">Enter a Total Price.</div>
-                </div>
-                <!--REMOVE ITEM-->
-                <div class="col">
-                    <button type="button" class="btn btn-outline-primary" onclick="if(this.parentNode.parentNode.parentNode.childElementCount > 1) { return this.parentNode.parentNode.remove(); }">Remove</button>
-                </div>
-            </div>
-        </div>
-        <button type="submit" class="btn btn-primary mt-3" onclick="fakeSubmit()">Generate Invoice</button>
-    </form>
-</div>
+    <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>CustomerId</th>
+            <th>Date</th>
+            <th>DueDate</th>
+            <th>Payment Terms</th>
+        </tr>
+    </tfoot>
+</table>
 
-<script>
-
-    $(document).ready(function () {
-
-        $(".addLineItemBtn").click(function () {
-            $('#line-item').clone().appendTo('#invoice-form-body');
-        });
-
-    });
-
-    function fakeSubmit() {
-        var formData = JSON.stringify($("#invoice-form").serializeArray());
-        alert(formData);
-    }
-
-    // JavaScript for disabling form submissions if there are invalid fields
-    (function () {
-        'use strict';
-        window.addEventListener('load', function () {
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.getElementsByClassName('needs-validation');
-            // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        }, false);
-    })();
-
-</script>
 
