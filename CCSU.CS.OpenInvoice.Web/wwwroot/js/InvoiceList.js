@@ -10,10 +10,10 @@
             "aaData": data,
             "columns": [
                 { data: 'Id' },
-                { data: 'CustomerId' },
+                { data: 'CustomerName' },
                 { data: 'Date' },
                 { data: 'DueDate' },
-                { data: 'PaymentTerms' }
+                { data: 'Total' }
             ]
         });
     });
