@@ -38,6 +38,67 @@ function updateTotalAfterTax() {
     }
 }
 
+function docToPDF() {
+
+    var invoiceContent = document.documentElement;
+
+    //var elementsToHide = document.querySelectorAll('.non-print');
+    //elementsToHide.forEach(function (button) {
+    //    button.style.display = 'none'; // Hide the buttons
+    //});
+
+    
+    // Set options for the PDF creation
+    var opt = {
+        margin: 10,
+        filename: 'invoice.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    // Use html2pdf to convert HTML content to PDF
+    html2pdf().from(invoiceContent).set(opt).save();
+
+}
+
+//function generateFormData() {
+
+//    let formData = {
+
+//        Id: $('input[name="Id"]').val(),
+//        Date: $('input[name="Date"]').val(),
+//        DueDate: $('input[name="DueDate"]').val(),
+//        PaymentTerms: $('input[name="PaymentTerms"]').val(),
+//        From: $('input[name="From"]').val(),
+//        BillTo: $('input[name="BillTo"]').val(),
+//        Notes: $('input[name="Notes"]').val(),
+//        Terms: $('input[name="Terms"]').val(),
+//        SubTotal: $('input[name="SubTotal"]').val(),
+//        Tax: $('input[name="Tax"]').val(),
+//        Total: $('input[name="Total"]').val(),
+//        lineItems: []
+//        $('.line-item').each(function () {
+//            var lineItem = {
+//                Id: $(this).find('input[name="Id"]').val(),
+//                Description: $(this).find('input[name="Description"]').val(),
+//                Qty: $(this).find('input[name="Qty"]').val(),
+//                Price: $(this).find('input[name="Price"]').val(),
+//                TotalPrice: $(this).find('input[name="TotalPrice"]').val(),
+//            };
+//            formData.lineItems.push(lineItem);
+//        });
+
+
+
+
+//    }
+
+//    return formData;
+
+
+//}
+
 $(document).ready(function () {
 
     $('.datepicker').datepicker({
@@ -66,7 +127,7 @@ $(document).ready(function () {
         updateTotalAfterTax();
     });
 
- 
+
 
 
 

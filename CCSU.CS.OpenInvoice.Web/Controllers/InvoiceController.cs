@@ -41,9 +41,11 @@ namespace CCSU.CS.OpenInvoice.Web.Controllers
 
             var invoice = new Invoice
             {
-
-                Company = company,
-                Customer = customer
+                Terms = company.Terms,
+                Notes = company.Notes,
+                From = company.CompleteAddress,
+                BillTo = customer.CompleteAddress,
+                Logo  = company.Logo
             };
 
             return View(invoice);
