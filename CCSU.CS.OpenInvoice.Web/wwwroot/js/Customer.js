@@ -119,6 +119,18 @@ $(document).ready(function () {
         select: {
             style: 'single'
         },
+        columnDefs: [
+            {
+                target: 0,
+                visible: false,
+                searchable: false
+            },
+            {
+                target: 11,
+                visible: false,
+                searchable: false
+            }
+        ],
         initComplete: function (settings, json) {
             oTable = $('#example').dataTable();
 
@@ -134,7 +146,20 @@ $(document).ready(function () {
             });
 
             document.querySelector('#ultimateEditButton').addEventListener('click', function () {
-                console.log(oTable.api().row('.selected').data().Id);
+                //console.log(oTable.api().row('.selected').data().Id);
+                var customerData = oTable.api().row('.selected').data();
+                console.log(customerData.Id);
+                $("#editCustomerName").val(customerData.Name);
+                $("#editCustomerContact").val(customerData.Contact);
+                $("#editCustomerAddress").val(customerData.Address);
+                $("#editCustomerAddress2").val(customerData.Address2);
+                $("#editCustomerCity").val(customerData.City);
+                $("#editCustomerState").val(customerData.State);
+                $("#editCustomerZip").val(customerData.Zip);
+                $("#editCustomerCountry").val(customerData.Country);
+                $("#editCustomerPhone").val(customerData.Phone);
+                $("#editCustomerEmail").val(customerData.Email);
+                $("#editCustomerNotes").val(customerData.Notes);
             });
         },
         columns: [
@@ -148,7 +173,8 @@ $(document).ready(function () {
             { data: 'Zip' },
             { data: 'Country' },
             { data: 'Phone' },
-            { data: 'Email' }
+            { data: 'Email' },
+            { data: 'Notes' }
         ]
     });
 });
