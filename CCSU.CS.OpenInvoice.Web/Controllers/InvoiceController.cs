@@ -29,21 +29,23 @@ namespace CCSU.CS.OpenInvoice.Web.Controllers
                 City = "Hartford",
                 Contact = "Test contact",
                 Country = "USA",
-                Email = "test@test.com" ,
+                Email = "test@test.com",
                 Name = "Test customer",
                 Phone = "(203)111-2222",
                 State = "CT",
                 Zip = "06106",
                 Notes = "Notes"
-              
+
 
             };
 
             var invoice = new Invoice
             {
-
-                Company = company,
-                Customer = customer
+                Terms = company.Terms,
+                Notes = company.Notes,
+                From = company.CompleteAddress,
+                BillTo = customer.CompleteAddress,
+                Logo = company.Logo
             };
 
             return View(invoice);

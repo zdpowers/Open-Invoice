@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -64,24 +65,21 @@ namespace CCSU.CS.OpenInvoice.Web.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    CompanyId = table.Column<int>(type: "INTEGER", nullable: false),
-                    CustomerId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Date = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    DueDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    PaymentTerms = table.Column<string>(type: "TEXT", nullable: false),
+                    Logo = table.Column<string>(type: "TEXT", nullable: false),
+                    From = table.Column<string>(type: "TEXT", nullable: false),
+                    BillTo = table.Column<string>(type: "TEXT", nullable: false),
+                    Notes = table.Column<string>(type: "TEXT", nullable: false),
+                    Terms = table.Column<string>(type: "TEXT", nullable: false),
+                    SubTotal = table.Column<double>(type: "REAL", nullable: false),
+                    Tax = table.Column<double>(type: "REAL", nullable: false),
+                    Total = table.Column<double>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Invoices", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Invoices_Companies_CompanyId",
-                        column: x => x.CompanyId,
-                        principalTable: "Companies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Invoices_Customers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -107,16 +105,6 @@ namespace CCSU.CS.OpenInvoice.Web.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Invoices_CompanyId",
-                table: "Invoices",
-                column: "CompanyId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Invoices_CustomerId",
-                table: "Invoices",
-                column: "CustomerId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_LineItems_InvoiceId",
                 table: "LineItems",
                 column: "InvoiceId");
@@ -126,16 +114,16 @@ namespace CCSU.CS.OpenInvoice.Web.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "LineItems");
-
-            migrationBuilder.DropTable(
-                name: "Invoices");
-
-            migrationBuilder.DropTable(
                 name: "Companies");
 
             migrationBuilder.DropTable(
                 name: "Customers");
+
+            migrationBuilder.DropTable(
+                name: "LineItems");
+
+            migrationBuilder.DropTable(
+                name: "Invoices");
         }
     }
 }

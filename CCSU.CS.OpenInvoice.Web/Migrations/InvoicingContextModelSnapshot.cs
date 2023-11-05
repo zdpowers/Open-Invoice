@@ -136,17 +136,46 @@ namespace CCSU.CS.OpenInvoice.Web.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("BillTo")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("INTEGER");
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DueDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("From")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Logo")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PaymentTerms")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("SubTotal")
+                        .HasColumnType("REAL");
+
+                    b.Property<double>("Tax")
+                        .HasColumnType("REAL");
+
+                    b.Property<string>("Terms")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("REAL");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CompanyId");
-
-                    b.HasIndex("CustomerId");
 
                     b.ToTable("Invoices");
                 });
@@ -178,25 +207,6 @@ namespace CCSU.CS.OpenInvoice.Web.Migrations
                     b.HasIndex("InvoiceId");
 
                     b.ToTable("LineItems");
-                });
-
-            modelBuilder.Entity("CCSU.CS.OpenInvoice.Web.Models.Invoice", b =>
-                {
-                    b.HasOne("CCSU.CS.OpenInvoice.Web.Models.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CCSU.CS.OpenInvoice.Web.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Company");
-
-                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("CCSU.CS.OpenInvoice.Web.Models.LineItem", b =>
