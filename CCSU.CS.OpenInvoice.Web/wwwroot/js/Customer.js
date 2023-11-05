@@ -64,52 +64,6 @@ function submitForm(formData) {
 
 var oTable;
 
-/*$.ajax({
-    'url': "/api/Customers",
-    'method': "GET",
-    'contentType': 'application/json' //,
-    //'dataSrc': ''
-}).done(function (data) {
-    $('#example').dataTable({
-        //"ajax": '',
-        select: {
-            style: 'single'
-        },
-        "initComplete": function (settings, json) {
-            oTable = $('#example').dataTable();
-
-            oTable.on('click', 'tbody tr', (e) => {
-                let classList = e.currentTarget.classList;
-
-                if (classList.contains('selected')) {
-                    classList.remove('selected');
-                }
-                else {
-                    classList.add('selected');
-                }
-            });
-
-            document.querySelector('#ultimateEditButton').addEventListener('click', function () {
-                console.log(oTable.api().row('.selected').data().Id);
-            });
-        },
-        "aaData": data,
-        "columns": [
-            { data: 'Id' },
-            { data: 'Name' },
-            { data: 'Contact' },
-            { data: 'Address' },
-            { data: 'Address2' },
-            { data: 'City' },
-            { data: 'State' },
-            { data: 'Zip' },
-            { data: 'Country' },
-            { data: 'Phone' },
-            { data: 'Email' }
-        ]
-    });
-});*/
-
 $(document).ready(function () {
     $('#example').dataTable({
         ajax: {
