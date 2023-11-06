@@ -2,44 +2,25 @@
 
 @section Scripts{
 
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-
-    @* <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script> *@
-    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
-
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="~/js/InvoiceList.js"></script>
 
 }
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-<link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
-<link href="https://cdn.datatables.net/rowreorder/1.4.1/css/rowReorder.bootstrap5.min.css" rel="stylesheet" type="text/css" />
 
 <h3 class="page-title">Invoice History</h3>
 
 <table id="invoiceTable" class="table table-striped" style="width:100%">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>CustomerId</th>
-            <th>Date</th>
-            <th>DueDate</th>
-            <th>Payment Terms</th>
+            <th>Invoice Number</th>
+            <th>Customer Name</th>
+            <th>Invoice Date</th>
+            <th>Due Date</th>
+            <th>Invoice Total</th>
         </tr>
     </thead>
-
-    <tfoot>
-        <tr>
-            <th>Id</th>
-            <th>CustomerId</th>
-            <th>Date</th>
-            <th>DueDate</th>
-            <th>Payment Terms</th>
-        </tr>
-    </tfoot>
 </table>
 
 
