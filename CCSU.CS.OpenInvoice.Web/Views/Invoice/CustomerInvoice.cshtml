@@ -47,7 +47,12 @@
                     <div class="form-row form-group">
                         <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Date</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control form-control-sm datepicker" asp-for="Date" asp-format="{0:MM/dd/yyyy}">
+                            <div class="input-group">
+                                <input type="text" class="form-control form-control-sm datepicker" asp-for="Date" asp-format="{0:MM/dd/yyyy}">
+                                <span class="input-group-append ml-n1" data-html2canvas-ignore>
+                                    <div class="input-group-text bg-transparent"><i class="fa fa-calendar-alt"></i></div>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="form-row form-group">
@@ -59,7 +64,13 @@
                     <div class="form-row form-group">
                         <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Due Date</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control form-control-sm datepicker"  asp-for="DueDate" asp-format="{0:MM/dd/yyyy}">
+                            <div class="input-group">
+                                <input type="text" class="form-control form-control-sm datepicker" asp-for="DueDate" asp-format="{0:MM/dd/yyyy}">
+                                <span class="input-group-append ml-n1" data-html2canvas-ignore>
+                                    <div class="input-group-text bg-transparent"><i class="fa fa-calendar-alt"></i></div>
+                                </span>
+                            </div>
+
                         </div>
                     </div>
 
@@ -159,8 +170,8 @@
                         <div class="col">
                             <button class="btn btn-primary" id="invoice-btn-print"><i class="fa-solid fa-print p-1"></i>Print</button>
                         </div>
-                        
-                        
+
+
                     </div>
 
 
