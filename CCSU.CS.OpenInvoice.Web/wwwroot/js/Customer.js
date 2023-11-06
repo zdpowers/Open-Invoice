@@ -20,25 +20,10 @@ $("#customer-form").on("submit", function (e) {
         let form = $(e.target);
         let json = convertFormToJSON(form);
         submitForm(json);
+        $('#myModal').hide(); //closes the modal
+        $('.modal-backdrop').hide(); //closes the backdrop
     }
 });
-
-/*$("#customer-form").on("edit", function () {
-    console.log("Hello from editting modal!");
-    //$("#customerName").val("Test Name :D");
-});*/
-
-//$(document).ready(function () {
-//    $("#modalEdit").click(function () {
-//        $('#myModal').modal('show');
-//        $("#customerName").val("Test Name :D");
-//    });
-//});
-
-//function fillAddCustomerModal() {
-//    $('#myModal').modal('show');
-//    $("#customerName").val("Test Name :D");
-//}
 
 function convertFormToJSON(form) {
     return $(form)
@@ -66,7 +51,9 @@ function submitForm(formData) {
         data: JSON.stringify(formData),
         success: function (data) {
             //alert("Success");
-            location.reload(true);
+            //location.reload(true);
+            $('#example').DataTable().ajax.reload(null, false); //reloads ajax table
+            $('#customer-form')[0].reset(); //clears the modal form
         },
         error: function (xhr, textStatus, errorThrown) {
             alert('Request Status: ' + xhr.status + '; Status Text: ' + textStatus + '; Error: ' + errorThrown);
@@ -75,14 +62,61 @@ function submitForm(formData) {
 
 }
 
-$.ajax({
-    'url': "/api/Customers",
-    'method': "GET",
-    'contentType': 'application/json'
-}).done(function (data) {
+var oTable;
+
+$(document).ready(function () {
     $('#example').dataTable({
-        "aaData": data,
-        "columns": [
+        ajax: {
+            'url': '/api/Customers',
+            'dataSrc': ''
+        },
+        select: {
+            style: 'single'
+        },
+        columnDefs: [
+            {
+                target: 0,
+                visible: false,
+                searchable: false
+            },
+            {
+                target: 11,
+                visible: false,
+                searchable: false
+            }
+        ],
+        initComplete: function (settings, json) {
+            oTable = $('#example').dataTable();
+
+            oTable.on('click', 'tbody tr', (e) => {
+                let classList = e.currentTarget.classList;
+
+                if (classList.contains('selected')) {
+                    classList.remove('selected');
+                }
+                else {
+                    classList.add('selected');
+                }
+            });
+
+            document.querySelector('#ultimateEditButton').addEventListener('click', function () {
+                //console.log(oTable.api().row('.selected').data().Id);
+                var customerData = oTable.api().row('.selected').data();
+                console.log(customerData.Id);
+                $("#editCustomerName").val(customerData.Name);
+                $("#editCustomerContact").val(customerData.Contact);
+                $("#editCustomerAddress").val(customerData.Address);
+                $("#editCustomerAddress2").val(customerData.Address2);
+                $("#editCustomerCity").val(customerData.City);
+                $("#editCustomerState").val(customerData.State);
+                $("#editCustomerZip").val(customerData.Zip);
+                $("#editCustomerCountry").val(customerData.Country);
+                $("#editCustomerPhone").val(customerData.Phone);
+                $("#editCustomerEmail").val(customerData.Email);
+                $("#editCustomerNotes").val(customerData.Notes);
+            });
+        },
+        columns: [
             { data: 'Id' },
             { data: 'Name' },
             { data: 'Contact' },
@@ -94,28 +128,7 @@ $.ajax({
             { data: 'Country' },
             { data: 'Phone' },
             { data: 'Email' },
-            {
-                data: null,
-                render: function (data, type, row) {
-                    $("#edit").click(function (e) {
-                        //console.log($('#example').DataTable().row().data());
-                        console.log(row);
-                    });
-
-                    /*counter = 1;
-                    myButton = '';
-                    row().forEach(myFunction);
-                    function myFunction() {
-                        myButton = '<button type="edit" id="edit'
-                            + counter + '" class="btn btn-link" data-toggle="modal" data-target="#myModal" data-whatever="editing">Edit</button>';
-                        counter += 1;
-                        return myButton;
-                    }*/
-
-                    return '<button type="edit" id="edit'
-                        + '' + '" class="btn btn-link" data-toggle="modal" data-target="#myModal" data-whatever="editing">Edit</button>';
-                }
-            }
+            { data: 'Notes' }
         ]
     });
 });
