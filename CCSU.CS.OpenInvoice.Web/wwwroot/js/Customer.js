@@ -75,15 +75,19 @@ $(document).ready(function () {
         },
         columnDefs: [
             {
-                target: 0,
+                target: [0,3,4,5,6,7,8,11],
                 visible: false,
                 searchable: false
-            },
+            },         
             {
-                target: 11,
-                visible: false,
-                searchable: false
+                target: 12,
+                className: 'dt-body-center',
+                searchable: false,
+                orderable : false
             }
+
+
+            
         ],
         initComplete: function (settings, json) {
             oTable = $('#example').dataTable();
@@ -98,23 +102,6 @@ $(document).ready(function () {
                     classList.add('selected');
                 }
             });
-
-            document.querySelector('#ultimateEditButton').addEventListener('click', function () {
-                //console.log(oTable.api().row('.selected').data().Id);
-                var customerData = oTable.api().row('.selected').data();
-                console.log(customerData.Id);
-                $("#editCustomerName").val(customerData.Name);
-                $("#editCustomerContact").val(customerData.Contact);
-                $("#editCustomerAddress").val(customerData.Address);
-                $("#editCustomerAddress2").val(customerData.Address2);
-                $("#editCustomerCity").val(customerData.City);
-                $("#editCustomerState").val(customerData.State);
-                $("#editCustomerZip").val(customerData.Zip);
-                $("#editCustomerCountry").val(customerData.Country);
-                $("#editCustomerPhone").val(customerData.Phone);
-                $("#editCustomerEmail").val(customerData.Email);
-                $("#editCustomerNotes").val(customerData.Notes);
-            });
         },
         columns: [
             { data: 'Id' },
@@ -128,7 +115,30 @@ $(document).ready(function () {
             { data: 'Country' },
             { data: 'Phone' },
             { data: 'Email' },
-            { data: 'Notes' }
+            { data: 'Notes' },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return '<button class="btn btn-primary btn-customer-edit" data-id="' + row.Id + '" data-toggle="modal" data-target="#mySecondModal">View/Edit</button><button class="btn btn-danger ml-2 btn-customer-delete" data-id="' + row.Id + '">Delete</button>';
+                }
+            }
         ]
+    });
+
+    $('#example').on('click', '.btn-customer-edit', function () {
+        let customerData = oTable.api().row($(this).parents('tr')).data();
+        //var customerData = oTable.api().row('.selected').data();
+        //console.log(customerData.Id);
+        $("#editCustomerName").val(customerData.Name);
+        $("#editCustomerContact").val(customerData.Contact);
+        $("#editCustomerAddress").val(customerData.Address);
+        $("#editCustomerAddress2").val(customerData.Address2);
+        $("#editCustomerCity").val(customerData.City);
+        $("#editCustomerState").val(customerData.State);
+        $("#editCustomerZip").val(customerData.Zip);
+        $("#editCustomerCountry").val(customerData.Country);
+        $("#editCustomerPhone").val(customerData.Phone);
+        $("#editCustomerEmail").val(customerData.Email);
+        $("#editCustomerNotes").val(customerData.Notes);
     });
 });
