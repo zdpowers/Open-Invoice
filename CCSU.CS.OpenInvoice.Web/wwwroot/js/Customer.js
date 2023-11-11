@@ -4,7 +4,7 @@
     https://stackoverflow.com/questions/19981949/how-to-make-a-button-in-bootstrap-look-like-a-normal-link-in-nav-tabs
 */
 
-const myModal = document.getElementById('myModal')
+const myModal = document.getElementById('customer-modal')
 const myInput = document.getElementById('myInput')
 
 myModal.addEventListener('shown.bs.modal', () => {
@@ -14,16 +14,8 @@ myModal.addEventListener('shown.bs.modal', () => {
 var form = $("#customer-form");
 form.validate();
 
-$("#customer-form").on("submit", function (e) {
-    event.preventDefault();
-    if ($("#customer-form").valid()) {
-        let form = $(e.target);
-        let json = convertFormToJSON(form);
-        submitForm(json);
-        $('#myModal').hide(); //closes the modal
-        $('.modal-backdrop').hide(); //closes the backdrop
-    }
-});
+
+
 
 function convertFormToJSON(form) {
     return $(form)
@@ -52,7 +44,7 @@ function submitForm(formData) {
         success: function (data) {
             //alert("Success");
             //location.reload(true);
-            $('#example').DataTable().ajax.reload(null, false); //reloads ajax table
+            $('#cutomer-table').DataTable().ajax.reload(null, false); //reloads ajax table
             $('#customer-form')[0].reset(); //clears the modal form
         },
         error: function (xhr, textStatus, errorThrown) {
@@ -65,7 +57,7 @@ function submitForm(formData) {
 var oTable;
 
 $(document).ready(function () {
-    $('#example').dataTable({
+    $('#cutomer-table').dataTable({
         ajax: {
             'url': '/api/Customers',
             'dataSrc': ''
@@ -75,18 +67,22 @@ $(document).ready(function () {
         },
         columnDefs: [
             {
-                target: 0,
+                target: [0,3,4,5,6,7,8,11],
                 visible: false,
                 searchable: false
-            },
+            },         
             {
-                target: 11,
-                visible: false,
-                searchable: false
+                target: 12,
+                className: 'dt-body-center',
+                searchable: false,
+                orderable : false
             }
+
+
+            
         ],
         initComplete: function (settings, json) {
-            oTable = $('#example').dataTable();
+            oTable = $('#cutomer-table').dataTable();
 
             oTable.on('click', 'tbody tr', (e) => {
                 let classList = e.currentTarget.classList;
@@ -97,23 +93,6 @@ $(document).ready(function () {
                 else {
                     classList.add('selected');
                 }
-            });
-
-            document.querySelector('#ultimateEditButton').addEventListener('click', function () {
-                //console.log(oTable.api().row('.selected').data().Id);
-                var customerData = oTable.api().row('.selected').data();
-                console.log(customerData.Id);
-                $("#editCustomerName").val(customerData.Name);
-                $("#editCustomerContact").val(customerData.Contact);
-                $("#editCustomerAddress").val(customerData.Address);
-                $("#editCustomerAddress2").val(customerData.Address2);
-                $("#editCustomerCity").val(customerData.City);
-                $("#editCustomerState").val(customerData.State);
-                $("#editCustomerZip").val(customerData.Zip);
-                $("#editCustomerCountry").val(customerData.Country);
-                $("#editCustomerPhone").val(customerData.Phone);
-                $("#editCustomerEmail").val(customerData.Email);
-                $("#editCustomerNotes").val(customerData.Notes);
             });
         },
         columns: [
@@ -128,7 +107,50 @@ $(document).ready(function () {
             { data: 'Country' },
             { data: 'Phone' },
             { data: 'Email' },
-            { data: 'Notes' }
+            { data: 'Notes' },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return '<button class="btn btn-primary btn-customer-edit" data-id="' + row.Id + '"><i class="fa-solid fa-pen-to-square p-1"></i>Edit</button><button class="btn btn-secondary ml-2 btn-customer-delete" data-id="' + row.Id + '"><i class="fa-solid fa-file-invoice p-1"></i>Inovice</button>';
+                }
+            }
         ]
+    });
+
+    $('#cutomer-table').on('click', '.btn-customer-edit', function () {
+        let customerData = oTable.api().row($(this).parents('tr')).data();
+        form[0].reset()
+        $("#editCustomerName").val(customerData.Name);
+        $("#editCustomerContact").val(customerData.Contact);
+        $("#editCustomerAddress").val(customerData.Address);
+        $("#editCustomerAddress2").val(customerData.Address2);
+        $("#editCustomerCity").val(customerData.City);
+        $("#editCustomerState").val(customerData.State);
+        $("#editCustomerZip").val(customerData.Zip);
+        $("#editCustomerCountry").val(customerData.Country);
+        $("#editCustomerPhone").val(customerData.Phone);
+        $("#editCustomerEmail").val(customerData.Email);
+        $("#editCustomerNotes").val(customerData.Notes);
+        $(myModal).find(".modal-title").html("Edit Customer")
+        $(myModal).modal();
+    });
+
+    $("#customerAddButton").on("click", function (e) {
+        $(myModal).find(".modal-title").html("Add Customer")
+        form[0].reset()
+        $("#customer-modal").modal();
+    });
+
+
+
+
+    $("#customer-form").on("submit", function (e) {
+        event.preventDefault();
+        if ($("#customer-form").valid()) {
+            let form = $(e.target);
+            let json = convertFormToJSON(form);
+            submitForm(json);
+            $(myModal).modal('hide'); //closes the modal
+        }
     });
 });
