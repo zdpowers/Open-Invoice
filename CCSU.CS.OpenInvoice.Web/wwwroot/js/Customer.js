@@ -14,9 +14,6 @@ myModal.addEventListener('shown.bs.modal', () => {
 var form = $("#customer-form");
 form.validate();
 
-
-
-
 function convertFormToJSON(form) {
     return $(form)
         .serializeArray()
@@ -42,8 +39,32 @@ function submitForm(formData) {
         dataType: "json",
         data: JSON.stringify(formData),
         success: function (data) {
-            //alert("Success");
-            //location.reload(true);
+            $('#cutomer-table').DataTable().ajax.reload(null, false); //reloads ajax table
+            $('#customer-form')[0].reset(); //clears the modal form
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            alert('Request Status: ' + xhr.status + '; Status Text: ' + textStatus + '; Error: ' + errorThrown);
+        }
+    });
+
+}
+
+function deleteCustomer(customerId) {
+    console.log(customerId);
+    console.log(JSON.stringify(customerId));
+    let headers = {};
+    let antiForgeryToken = $("input[name=__RequestVerificationToken]").val();
+
+    headers['RequestVerificationToken'] = antiForgeryToken;
+
+    $.ajax({
+        url: "api/Customers/Delete?id= " + customerId,
+        headers: headers,
+        contentType: "application/json",
+        type: "DELETE",
+        dataType: "json",
+        data: JSON.stringify(customerId),
+        success: function (data) {
             $('#cutomer-table').DataTable().ajax.reload(null, false); //reloads ajax table
             $('#customer-form')[0].reset(); //clears the modal form
         },
@@ -67,19 +88,19 @@ $(document).ready(function () {
         },
         columnDefs: [
             {
-                target: [0,3,4,5,6,7,8,11],
+                target: [0, 3, 4, 5, 6, 7, 8, 11],
                 visible: false,
                 searchable: false
-            },         
+            },
             {
                 target: 12,
                 className: 'dt-body-center',
                 searchable: false,
-                orderable : false
+                orderable: false
             }
 
 
-            
+
         ],
         initComplete: function (settings, json) {
             oTable = $('#cutomer-table').dataTable();
@@ -111,7 +132,7 @@ $(document).ready(function () {
             {
                 data: null,
                 render: function (data, type, row) {
-                    return '<button class="btn btn-primary btn-customer-edit" data-id="' + row.Id + '"><i class="fa-solid fa-pen-to-square p-1"></i>Edit</button><button class="btn btn-secondary ml-2 btn-customer-delete" data-id="' + row.Id + '"><i class="fa-solid fa-file-invoice p-1"></i>Inovice</button>';
+                    return '<button class="btn btn-primary btn-customer-edit" data-id="' + row.Id + '"><i class="fa-solid fa-pen-to-square p-1"></i>Edit</button><button class="btn btn-secondary ml-2 btn-customer-invoice" data-id="' + row.Id + '"><i class="fa-solid fa-file-invoice p-1"></i>Inovice</button><button class="btn btn-danger ml-2 btn-customer-delete" data-id="' + row.Id + '"><i class="fa-solid fa-trash p-1"></i>Delete</button>';
                 }
             }
         ]
@@ -141,9 +162,6 @@ $(document).ready(function () {
         $("#customer-modal").modal();
     });
 
-
-
-
     $("#customer-form").on("submit", function (e) {
         event.preventDefault();
         if ($("#customer-form").valid()) {
@@ -152,5 +170,38 @@ $(document).ready(function () {
             submitForm(json);
             $(myModal).modal('hide'); //closes the modal
         }
+    });
+
+    //$(myModal).on("shown.bs.modal", function () {
+    //    e.preventDefault();
+    //    if ($("#customer-form").valid()) {
+    //        let form = $(e.target);
+    //        let json = convertFormToJSON(form);
+    //        deleteCustomer(json);
+    //        $(myModal).modal('hide'); //closes the modal
+    //    }
+    //}
+
+    //$("#customerDeleteButton").on("click", function (){
+    //    e.preventDefault();
+    //    if ($("#customer-form").valid()) {
+    //        let form = $(e.target);
+    //        let json = convertFormToJSON(form);
+    //        deleteCustomer(json);
+    //    }
+    //});
+
+    $("#cutomer-table").on("click", ".btn-customer-delete", function () {
+        console.log("Hello :D");
+        let customerData = oTable.api().row($(this).parents("tr")).data();
+        let customerId = customerData.Id;
+        deleteCustomer(customerId);
+    });
+
+    $("#customer-form").on("click", ".btn-customer-delete", function () {
+        console.log("Hello :D");
+        let customerData = oTable.api().row($(this).parents("tr")).data();
+        let customerId = customerData.Id;
+        deleteCustomer(customerId);
     });
 });
