@@ -13,7 +13,13 @@
                 { data: 'Customer.Name' },
                 { data: 'Date' },
                 { data: 'DueDate' },
-                { data: 'Total' }
+                { data: 'Total' },
+                {
+                    data: null,
+                    render: function (data, type, row) {
+                        return '<button class="btn btn-primary btn-invoice-edit" data-id="' + row.Id + '"><i class="fa-solid fa-pen-to-square p-1"></i>Edit</button>';
+                    }
+                }
             ]
         });
     });
