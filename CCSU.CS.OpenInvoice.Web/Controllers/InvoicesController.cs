@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CCSU.CS.OpenInvoice.Web.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CCSU.CS.OpenInvoice.Web.Controllers
 {
@@ -6,10 +8,10 @@ namespace CCSU.CS.OpenInvoice.Web.Controllers
     [ApiController]
     public class InvoicesController : ControllerBase
     {
-        private readonly InvoicingContext _invoiceingContext;
+        private readonly InvoicingContext _invoicingContext;
         public InvoicesController(InvoicingContext invoicingContext)
         {
-            _invoiceingContext = invoicingContext;
+            _invoicingContext = invoicingContext;
         }
 
         [HttpGet]
@@ -17,7 +19,7 @@ namespace CCSU.CS.OpenInvoice.Web.Controllers
         {
             try
             {
-                var invoices = _invoiceingContext.Invoices;
+                var invoices = _invoicingContext.Invoices.Include(i => i.Customer);
                 return Ok(invoices);
             }
             catch (Exception ex)
@@ -25,5 +27,52 @@ namespace CCSU.CS.OpenInvoice.Web.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
+        [HttpPost]
+        [Route("Save")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult<Invoice>> Save(Invoice invoice)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (invoice.Id > 0)
+                    {
+                        
+                        var invoiceItemsNotInDatabase = _invoicingContext.LineItems
+                            .AsNoTracking()
+                            .Where(i => i.InvoiceId == invoice.Id).AsEnumerable().Where(dbLineItem => !invoice.LineItems.Any(li => li.Id == dbLineItem.Id)).ToList();
+
+
+                        if (invoiceItemsNotInDatabase.Any())
+                        {
+                            _invoicingContext.LineItems.RemoveRange(invoiceItemsNotInDatabase);
+                        }
+                         
+
+                        _invoicingContext.Invoices.Update(invoice);
+                    }
+                    else
+                    {
+
+                        var createdInvoice = _invoicingContext.Invoices.Add(invoice);
+                    }
+                    await _invoicingContext.SaveChangesAsync();
+                    return CreatedAtAction("GetInvoice", new { id = invoice.Id }, invoice);
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(500, ex.Message);
+                }
+
+            }
+
+            return BadRequest();
+
+
+        }
+
+
     }
 }

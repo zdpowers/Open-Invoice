@@ -16,25 +16,25 @@ function updateSubtotal() {
     });
 
     // Update the subtotal input value
-    $('input[name="subtotal"]').val(subtotal.toFixed(2));
+    $('input[name="SubTotal"]').val(subtotal.toFixed(2));
     updateTotalAfterTax();
 }
 
 function removeLineItem(lineItem) {
-    if (lineItem.target.parentNode.parentNode.parentNode.childElementCount > 1) {
-        lineItem.target.parentNode.parentNode.remove();
+    if ($(lineItem.target).parents("#invoice-form-body")[0].children.length > 1) {
+        $(lineItem.target).parents(".line-item")[0].remove();
         updateSubtotal();
 
     }
 
 }
 function updateTotalAfterTax() {
-    var subtotal = parseFloat($('input[name="subtotal"]').val());
-    var taxPercentage = parseFloat($('input[name="tax"]').val());
+    var subtotal = parseFloat($('input[name="SubTotal"]').val());
+    var taxPercentage = parseFloat($('input[name="Tax"]').val());
 
     if (!isNaN(subtotal) && !isNaN(taxPercentage)) {
         var totalAfterTax = subtotal * (1 + taxPercentage / 100);
-        $('input[name="total"]').val(totalAfterTax.toFixed(2));
+        $('input[name="Total"]').val(totalAfterTax.toFixed(2));
     }
 }
 
@@ -64,34 +64,62 @@ function generateFormData() {
 
     let formData = {
 
-        Id: $('input[name="Id"]').val(),
-        Date: $('input[name="Date"]').val(),
-        DueDate: $('input[name="DueDate"]').val(),
+        Id: Number($('input[name="Id"]').val()),
+        Date: $('input[name="Date"]').val() == "" ? null : new Date($("input[name=Date]").val()),
+        DueDate: $('input[name="DueDate"]').val() == "" ? null : new Date($("input[name=DueDate]").val()),
         PaymentTerms: $('input[name="PaymentTerms"]').val(),
         From: $('textarea[name="From"]').val(),
         BillTo: $('textarea[name="BillTo"]').val(),
+        CustomerId: $('input[name="CustomerId"]').val(),
         Notes: $('textarea[name="Notes"]').val(),
         Terms: $('textarea[name="Terms"]').val(),
-        SubTotal: $('input[name="SubTotal"]').val(),
-        Tax: $('input[name="Tax"]').val(),
-        Total: $('input[name="Total"]').val(),
-        lineItems: []
+        SubTotal: Number($('input[name="SubTotal"]').val()),
+        Tax: Number($('input[name="Tax"]').val()),
+        Total: Number($('input[name="Total"]').val()),
+        LineItems: []
      
     }
     $('.line-item').each(function () {
         var lineItem = {
             Id: $(this).find('input[name="Id"]').val(),
             Description: $(this).find('input[name="Description"]').val(),
-            Qty: $(this).find('input[name="Qty"]').val(),
-            Price: $(this).find('input[name="Price"]').val(),
-            TotalPrice: $(this).find('input[name="TotalPrice"]').val(),
+            Qty: Number($(this).find('input[name="Qty"]').val()),
+            Price: Number($(this).find('input[name="Price"]').val()),
+            TotalPrice: Number($(this).find('input[name="TotalPrice"]').val()),
         };
-        formData.lineItems.push(lineItem);
+        formData.LineItems.push(lineItem);
     });
 
 
     return formData;
 
+
+}
+
+function saveInvoice(formData) {
+    console.log(formData);
+    console.log(JSON.stringify(formData));
+    let headers = {};
+    let antiForgeryToken = $("input[name=__RequestVerificationToken]").val();
+
+    headers['RequestVerificationToken'] = antiForgeryToken;
+
+    $.ajax({
+        url: "/api/Invoices/save",
+        headers: headers,
+        contentType: "application/json",
+        type: "POST",
+        dataType: "json",
+        data: JSON.stringify(formData),
+        success: function (data) {
+            window.location.href = `/Customer/${data.CustomerId}/Invoice/${data.Id}`; //relative to domain
+            alert("Success");
+   
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            alert('Request Status: ' + xhr.status + '; Status Text: ' + textStatus + '; Error: ' + errorThrown);
+        }
+    });
 
 }
 
@@ -105,6 +133,7 @@ $(document).ready(function () {
     $("#invoice-btn-add").click(function () {
         var cloned = $('.line-item').first().clone()
         cloned.find('input[type="text"], input[type="number"]').val('');
+        cloned.find('input[type="hidden"]').val(0);
         // Append the cloned item to the invoice form body
         $('#invoice-form-body').append(cloned);
     });
@@ -119,15 +148,17 @@ $(document).ready(function () {
         updateSubtotal();
     });
 
-    $(document).on('input', 'input[name="tax"]', function () {
+    $(document).on('input', 'input[name="Tax"]', function () {
         updateTotalAfterTax();
     });
 
-    $("#invoice-btn-save").click(function () {
+    $("#invoice-btn-save").click(function (e) {
+        e.preventDefault();
         let data = generateFormData();
-        console.log(data);
+        saveInvoice(data);
     });
-    $("#invoice-btn-print").click(function () {
+    $("#invoice-btn-print").click(function (e) {
+        e.preventDefault();
         docToPDF()
     });
 

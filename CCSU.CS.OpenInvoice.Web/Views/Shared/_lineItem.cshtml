@@ -1,0 +1,35 @@
+﻿@model LineItem
+
+<div class="line-item form-row my-1">
+    <!--ITEM NAME-->
+    <div class="col-5">
+        <input name="Id" type="hidden" class="form-control" value="@Model.Id">
+        <input name="Description" type="text" class="form-control" placeholder="Item" required value="@Model.Description">
+        <div class="invalid-feedback">Enter an Item.</div>
+    </div>
+    <!--ITEM QUANTITY-->
+    <div class="col">
+        <input name="Qty" type="number" min="0" class="form-control row-price" placeholder="0" required value="@Model.Qty">
+        <div class="invalid-feedback">Enter a Quantity.</div>
+    </div>
+    <!--UNIT PRICE-->
+    <div class="col input-group">
+        <div class="input-group-prepend">
+            <div class="input-group-text">$</div>
+        </div>
+        <input name="Price" type="number" min="0.00" step=".01" class="form-control row-price" placeholder="0.00" required value="@Model.Price">
+        <div class="invalid-feedback">Enter a Unit Price.</div>
+    </div>
+    <!--TOTAL PRICE-->
+    <div class="col input-group">
+        <div class="input-group-prepend">
+            <div class="input-group-text">$</div>
+        </div>
+        <input name="TotalPrice" type="number" min="0.00" step=".01" class="form-control" placeholder="0.00" required readonly value="@Model.TotalPrice">
+        <div class="invalid-feedback">Enter a Total Price.</div>
+    </div>
+    <!--REMOVE ITEM-->
+    <div class="col text-center" data-html2canvas-ignore>
+        <button type="button" class="btn btn-outline-danger btn-invoice-remove"><i class="fa-solid fa-trash p-1"></i>Remove</button>
+    </div>
+</div>
