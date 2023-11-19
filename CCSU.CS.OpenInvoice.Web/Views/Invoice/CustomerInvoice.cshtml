@@ -5,7 +5,7 @@
     <form id="invoice-form">
 
         @Html.AntiForgeryToken()
-
+        <input type="hidden" class="form-control form-control-sm datepicker" asp-for="CustomerId">
         <div class="invoice-header">
             <div class="form-row">
                 <div class="form-group col-md-9 profile-pic-wrapper align-self-start">
@@ -25,7 +25,7 @@
                             <div class="input-group-prepend">
                                 <div class="input-group-text">#</div>
                             </div>
-                            <input type="text" class="form-control" asp-for="Id" placeholder="Invoice Number">
+                            <input type="text" class="form-control" name="Id" disabled value=@(Model.Id == 0 ? "" : Model.Id)>
                         </div>
                     </div>
 
@@ -88,38 +88,16 @@
 
             <!--FORM "TABLE"-->
             <div id="invoice-form-body">
-                <div class="line-item form-row my-1">
-                    <!--ITEM NAME-->
-                    <div class="col-5">
-                        <input name="Description" type="text" class="form-control" placeholder="Item" required>
-                        <div class="invalid-feedback">Enter an Item.</div>
-                    </div>
-                    <!--ITEM QUANTITY-->
-                    <div class="col">
-                        <input name="Qty" type="number" min="0" class="form-control row-price" placeholder="0" required>
-                        <div class="invalid-feedback">Enter a Quantity.</div>
-                    </div>
-                    <!--UNIT PRICE-->
-                    <div class="col input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">$</div>
-                        </div>
-                        <input name="Price" type="number" min="0.00" step=".01" class="form-control row-price" placeholder="0.00" required>
-                        <div class="invalid-feedback">Enter a Unit Price.</div>
-                    </div>
-                    <!--TOTAL PRICE-->
-                    <div class="col input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">$</div>
-                        </div>
-                        <input name="TotalPrice" type="number" min="0.00" step=".01" class="form-control" placeholder="0.00" required readonly>
-                        <div class="invalid-feedback">Enter a Total Price.</div>
-                    </div>
-                    <!--REMOVE ITEM-->
-                    <div class="col text-center" data-html2canvas-ignore>
-                        <button type="button" class="btn btn-outline-danger btn-invoice-remove"><i class="fa-solid fa-trash p-1"></i>Remove</button>
-                    </div>
-                </div>
+                @if (Model.LineItems.Count() == 0)
+                
+                {
+                    <partial name="_lineItem" model="new LineItem()"></partial>
+                }
+
+                @foreach (var item in Model.LineItems)
+                {
+                    <partial name="_lineItem" model="item"></partial>
+                }
             </div>
             <button type="button" id="invoice-btn-add" class="btn btn-success mt-3" data-html2canvas-ignore><i class="fa-solid fa-plus p-1"></i>Add Line Item</button>
         </div>
@@ -142,7 +120,7 @@
                             <div class="input-group-prepend">
                                 <div class="input-group-text">$</div>
                             </div>
-                            <input name="subtotal" type="number" min="0.00" step=".01" class="form-control" placeholder="0.00" required readonly>
+                            <input name="SubTotal" type="number" min="0.00" step=".01" class="form-control" placeholder="0.00" required readonly asp-for="SubTotal">
                         </div>
                     </div>
                     <div class="form-row form-group">
@@ -151,7 +129,7 @@
                             <div class="input-group-prepend">
                                 <div class="input-group-text">%</div>
                             </div>
-                            <input name="tax" type="number" min="0.00" step=".01" class="form-control" placeholder="0.00" required>
+                            <input name="Tax" type="number" min="0.00" step=".01" class="form-control" placeholder="0.00" required asp-for="Tax">
                         </div>
                     </div>
                     <div class="form-row form-group">
@@ -160,7 +138,7 @@
                             <div class="input-group-prepend">
                                 <div class="input-group-text">$</div>
                             </div>
-                            <input name="total" type="number" min="0.00" step=".01" class="form-control" placeholder="0.00" required readonly>
+                            <input name="Total" type="number" min="0.00" step=".01" class="form-control" placeholder="0.00" required readonly asp-for="Total">
                         </div>
                     </div>
                     <div class="form-row form-group mt-5" data-html2canvas-ignore>

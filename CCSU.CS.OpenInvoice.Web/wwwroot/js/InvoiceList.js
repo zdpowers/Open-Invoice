@@ -10,7 +10,7 @@
             "aaData": data,
             "columns": [
                 { data: 'Id' },
-                { data: 'CustomerName' },
+                { data: 'Customer.Name' },
                 { data: 'Date' },
                 { data: 'DueDate' },
                 { data: 'Total' }
