@@ -1,5 +1,6 @@
 ﻿using CCSU.CS.OpenInvoice.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CCSU.CS.OpenInvoice.Web.Controllers
 {
@@ -18,37 +19,38 @@ namespace CCSU.CS.OpenInvoice.Web.Controllers
 
         [HttpGet]
         [Route("Customer/{customerId}/Invoice/{invoiceId}")]
+        [Route("Customer/{customerId}/Invoice")]
         public IActionResult CustomerInvoice(int customerId, int invoiceId)
         {
             var company = _invoicingContext.Companies.FirstOrDefault();
-            var customer = new Customer
+            var customer = _invoicingContext.Customers.FirstOrDefault(customer => customer.Id == customerId);
+
+            if (invoiceId != 0)
             {
 
-                Address = "100 Main st",
-                Address2 = "3rd Floor",
-                City = "Hartford",
-                Contact = "Test contact",
-                Country = "USA",
-                Email = "test@test.com" ,
-                Name = "Test customer",
-                Phone = "(203)111-2222",
-                State = "CT",
-                Zip = "06106",
-                Notes = "Notes"
-              
+                var invoice = _invoicingContext.Invoices.Where(invoice => invoice.Id == invoiceId).Include(invoice => invoice.LineItems).FirstOrDefault();
+                invoice.Logo = company.Logo; 
+                return View(invoice);
 
-            };
+            }
 
-            var invoice = new Invoice
-            {
-                Terms = company.Terms,
-                Notes = company.Notes,
-                From = company.CompleteAddress,
-                BillTo = customer.CompleteAddress,
-                Logo  = company.Logo
-            };
+            else {
+ 
+                var invoice = new Invoice
+                {
 
-            return View(invoice);
+                    Terms = company.Terms,
+                    Notes = company.Notes,
+                    CustomerId = customerId,
+                    From = company.CompleteAddress,
+                    BillTo = customer.CompleteAddress,
+                    Logo = company.Logo
+                };
+
+                return View(invoice);
+
+            }
+            
         }
 
 

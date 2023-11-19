@@ -140,6 +140,9 @@ namespace CCSU.CS.OpenInvoice.Web.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime?>("Date")
                         .HasColumnType("TEXT");
 
@@ -147,10 +150,6 @@ namespace CCSU.CS.OpenInvoice.Web.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("From")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Logo")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -177,6 +176,8 @@ namespace CCSU.CS.OpenInvoice.Web.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CustomerId");
+
                     b.ToTable("Invoices");
                 });
 
@@ -190,7 +191,7 @@ namespace CCSU.CS.OpenInvoice.Web.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("InvoiceId")
+                    b.Property<int>("InvoiceId")
                         .HasColumnType("INTEGER");
 
                     b.Property<double>("Price")
@@ -209,16 +210,29 @@ namespace CCSU.CS.OpenInvoice.Web.Migrations
                     b.ToTable("LineItems");
                 });
 
+            modelBuilder.Entity("CCSU.CS.OpenInvoice.Web.Models.Invoice", b =>
+                {
+                    b.HasOne("CCSU.CS.OpenInvoice.Web.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
             modelBuilder.Entity("CCSU.CS.OpenInvoice.Web.Models.LineItem", b =>
                 {
                     b.HasOne("CCSU.CS.OpenInvoice.Web.Models.Invoice", null)
-                        .WithMany("Items")
-                        .HasForeignKey("InvoiceId");
+                        .WithMany("LineItems")
+                        .HasForeignKey("InvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CCSU.CS.OpenInvoice.Web.Models.Invoice", b =>
                 {
-                    b.Navigation("Items");
+                    b.Navigation("LineItems");
                 });
 #pragma warning restore 612, 618
         }

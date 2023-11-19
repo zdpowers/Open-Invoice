@@ -1,15 +1,20 @@
-﻿namespace CCSU.CS.OpenInvoice.Web.Models
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace CCSU.CS.OpenInvoice.Web.Models
 {
     public class Invoice
     {
         public int Id { get; set; }
-
         public DateTime? Date { get; set; } = DateTime.Now;
         public DateTime? DueDate { get; set; }
 
         public string PaymentTerms { get; set; }
 
-        public string Logo { get; set; }
+        [JsonIgnore]
+        [NotMapped]
+        public string? Logo { get; set; }
 
         public string From { get; set; }
 
@@ -25,9 +30,11 @@
 
         public double Total { get; set; }
 
+        public int CustomerId { get; set; }
 
+        public Customer? Customer { get; set; }
 
-        public IEnumerable<LineItem> Items { get; set; }
+        public IEnumerable<LineItem> LineItems { get; set; } = Enumerable.Empty<LineItem>().ToList();
 
 
     }
