@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace CCSU.CS.OpenInvoice.Web.Controllers
-{ 
+{
     [Route("api/[controller]")]
     [ApiController]
     public class CustomersController : ControllerBase
@@ -62,11 +62,50 @@ namespace CCSU.CS.OpenInvoice.Web.Controllers
             try
             {
                 var customer = _invoicingContext.Customers.Find(id);
+                if (customer == null)
+                {
+                    return NotFound();
+                }
                 return Ok(customer);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpDelete]
+        [Route("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteCustomerById(int id)
+        {
+            try
+            {
+                var invoices = _invoicingContext.Invoices;
+                if (invoices != null)
+                {
+                    foreach (var invoice in invoices) //Goes through each invoice
+                    {
+                        if (invoice.CustomerId == id)   //If it has the customers ID associated
+                        {
+                            _invoicingContext.Remove(invoice); //Remove it
+                        }
+                    }
+                }
+
+                var customer = _invoicingContext.Customers.Find(id);
+                if (customer == null)
+                {
+                    return NotFound();
+                }
+                _invoicingContext.Customers.Remove(customer); //Then deletes the customer
+                _invoicingContext.SaveChanges();// Saves the changes to invoicing context
+
+                return Ok(customer);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, "Internal server Error");
             }
         }
     }
