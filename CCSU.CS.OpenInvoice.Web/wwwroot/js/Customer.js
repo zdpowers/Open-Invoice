@@ -159,6 +159,13 @@ $(document).ready(function () {
         $(customerModal).modal();
     });
 
+    $("#cutomer-table").on("click", ".btn-customer-invoice", function () {
+        let customerData = oTable.api().row($(this).parents('tr')).data();
+        let customerId = customerData.Id;
+        let invoiceUrl = "/Customer/" + customerId + "/Invoice/InvoiceID";
+        window.location.href = invoiceUrl;
+    });
+
     $("#customerAddButton").on("click", function (e) {
         $(customerModal).find(".modal-title").html("Add Customer")
         $(customerModal).find(".btn-danger").hide()
@@ -177,10 +184,6 @@ $(document).ready(function () {
     });
 
     $("#customer-form").on("click", ".btn-customer-delete-modal", function () {
-        //console.log("Hello :D");
-        //let customerId = $("#editCustomerId").val();
-        //console.log("customerId = " + customerId)
-        //deleteCustomer(customerId);
         let customerName = $(customerModal).find("#editCustomerName").val();
         let customerId = $(customerModal).find("#editCustomerId").val();
         $(deleteConfirmationModal).find(".cust-conf-name").html(customerName);
