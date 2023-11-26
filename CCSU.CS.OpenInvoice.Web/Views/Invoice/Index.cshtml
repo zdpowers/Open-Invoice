@@ -2,9 +2,13 @@
 
 @section Scripts{
 
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/select/1.7.0/js/dataTables.select.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+
     <script src="~/js/InvoiceList.js"></script>
 
 }
@@ -19,24 +23,10 @@
             <th>Invoice Date</th>
             <th>Due Date</th>
             <th>Invoice Total</th>
+            <th>CustomerID</th>
             <th></th>
         </tr>
     </thead>
 </table>
 
 
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-<script>
-
-    $(document).ready(function () {
-
-        $("#invoiceTable").on('click', '.btn-invoice-edit', function () {
-            let invoiceData = $('#invoiceTable').dataTable().api().row($(this).parents('tr')).data();
-            let invoiceId = invoiceData.Id;
-            let customerId = invoiceData.CustomerId;
-            let invoiceUrl = "/Customer/" + customerId + "/Invoice/" + invoiceId;
-            window.location.href = invoiceUrl;
-        });
-    });
-
-</script>
