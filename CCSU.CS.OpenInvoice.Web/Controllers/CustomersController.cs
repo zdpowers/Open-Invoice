@@ -81,29 +81,17 @@ namespace CCSU.CS.OpenInvoice.Web.Controllers
         {
             try
             {
-                var invoices = _invoicingContext.Invoices;
-                if (invoices != null)
-                {
-                    foreach (var invoice in invoices) //Goes through each invoice
-                    {
-                        if (invoice.CustomerId == id)   //If it has the customers ID associated
-                        {
-                            _invoicingContext.Remove(invoice); //Remove it
-                        }
-                    }
-                }
-
-                var customer = _invoicingContext.Customers.Find(id);
+                var customer = _invoicingContext.Customers.FirstOrDefault(c => c.Id == id);
                 if (customer == null)
                 {
                     return NotFound();
                 }
-                _invoicingContext.Customers.Remove(customer); //Then deletes the customer
-                _invoicingContext.SaveChanges();// Saves the changes to invoicing context
+                _invoicingContext.Customers.Remove(customer);
+                _invoicingContext.SaveChanges();
 
                 return Ok(customer);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(500, "Internal server Error");
             }

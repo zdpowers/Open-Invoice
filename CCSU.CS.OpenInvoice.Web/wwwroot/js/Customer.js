@@ -162,7 +162,7 @@ $(document).ready(function () {
     $("#cutomer-table").on("click", ".btn-customer-invoice", function () {
         let customerData = oTable.api().row($(this).parents('tr')).data();
         let customerId = customerData.Id;
-        let invoiceUrl = "/Customer/" + customerId + "/Invoice/InvoiceID";
+        let invoiceUrl = "/Customer/" + customerId + "/Invoice";
         window.location.href = invoiceUrl;
     });
 
