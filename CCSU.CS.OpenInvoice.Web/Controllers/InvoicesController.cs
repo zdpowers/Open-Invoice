@@ -74,5 +74,26 @@ namespace CCSU.CS.OpenInvoice.Web.Controllers
         }
 
 
+        [HttpDelete]
+        [Route("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteInvoiceById(int id)
+        {
+            try
+            {
+                var invoice = _invoicingContext.Invoices.FirstOrDefault(i => i.Id == id);
+                if (invoice == null)
+                {
+                    return NotFound();
+                }
+                _invoicingContext.Invoices.Remove(invoice);
+                _invoicingContext.SaveChanges();
+                return Ok(invoice);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server Error");
+            }
+        }
     }
 }
