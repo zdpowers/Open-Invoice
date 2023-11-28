@@ -133,7 +133,7 @@ $(document).ready(function () {
             {
                 data: null,
                 render: function (data, type, row) {
-                    return '<button class="btn btn-primary btn-customer-edit" data-id="' + row.Id + '"><i class="fa-solid fa-pen-to-square p-1"></i>Edit</button><button class="btn btn-secondary ml-2 btn-customer-invoice" data-id="' + row.Id + '"><i class="fa-solid fa-file-invoice p-1"></i>Inovice</button>';/* <button class="btn btn-danger ml-2 btn-customer-delete" data-id="' + row.Id + '"><i class="fa-solid fa-trash p-1"></i>Delete</button>';*/
+                    return '<button class="btn btn-primary btn-customer-edit" data-id="' + row.Id + '"><i class="fa-solid fa-pen-to-square p-1"></i>Edit</button><button class="btn btn-secondary ml-2 btn-customer-invoice" data-id="' + row.Id + '"><i class="fa-solid fa-file-invoice p-1"></i>Invoice</button>';/* <button class="btn btn-danger ml-2 btn-customer-delete" data-id="' + row.Id + '"><i class="fa-solid fa-trash p-1"></i>Delete</button>';*/
                 }
             }
         ]
