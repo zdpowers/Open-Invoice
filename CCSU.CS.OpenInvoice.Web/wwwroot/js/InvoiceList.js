@@ -3,8 +3,8 @@
 function deleteInvoice(invoiceId) {
     console.log(invoiceId);
     let headers = {};
-    let antiForgeryToken = $("input[name=__RequestVerificationToken]").val();
-    headers['RequestVerificationToken'] = antiForgeryToken;
+    //let antiForgeryToken = $("input[name=__RequestVerificationToken]").val();
+    //headers['RequestVerificationToken'] = antiForgeryToken;
 
     $.ajax({
         url: "api/Invoices/Delete?id=" + invoiceId,

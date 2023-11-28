@@ -76,7 +76,7 @@ namespace CCSU.CS.OpenInvoice.Web.Controllers
 
         [HttpDelete]
         [Route("Delete")]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public IActionResult DeleteInvoiceById(int id)
         {
             try
