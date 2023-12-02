@@ -41,6 +41,39 @@ function updateTotalAfterTax() {
 function docToPDF() {
 
     var invoiceContent = document.documentElement;
+    // Create a deep clone of the HTML content
+    var clonedContent = invoiceContent.cloneNode(true);
+
+    var style = document.createElement('style');
+    style.innerHTML = `
+        body {
+            font-family: 'Arial, sans-serif';
+        }
+        .form-control {
+            padding:0rem;
+            padding-left:0.5rem;
+        }
+        .input-group-text{
+             padding:0rem;
+             padding-left:0.5rem;
+             padding-right:0.5rem;
+        }
+        .input-group-text
+        {
+            background-color:#fff
+        }
+        .form-control:disabled, .form-control[readonly] {
+            background-color:#fff
+        }
+        .invoice-container {
+            border: none;
+            padding: 5px;
+        }
+        /* Add more styles as needed */
+    `;
+    clonedContent.querySelector('head').appendChild(style);
+
+
 
     var opt = {
         margin: 1,
@@ -56,7 +89,7 @@ function docToPDF() {
     };
 
     // Use html2pdf to convert HTML content to PDF
-    html2pdf().from(invoiceContent).set(opt).save();
+    html2pdf().from(clonedContent).set(opt).save();
 
 }
 
