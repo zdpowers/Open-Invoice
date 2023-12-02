@@ -25,7 +25,12 @@ namespace CCSU.CS.OpenInvoice.Web.Controllers
             var company = _invoicingContext.Companies.FirstOrDefault();
             var customer = _invoicingContext.Customers.FirstOrDefault(customer => customer.Id == customerId);
 
-            if (invoiceId != 0)
+            if (company is null)
+            {
+                Response.WriteAsync("<script>alert('Please enter Company information.'); window.location.href = '/Company';</script>");
+                return Redirect("/Company");
+            }
+            else if (invoiceId != 0)
             {
 
                 var invoice = _invoicingContext.Invoices.Where(invoice => invoice.Id == invoiceId).Include(invoice => invoice.LineItems).FirstOrDefault();
@@ -33,7 +38,6 @@ namespace CCSU.CS.OpenInvoice.Web.Controllers
                 return View(invoice);
 
             }
-
             else {
  
                 var invoice = new Invoice
