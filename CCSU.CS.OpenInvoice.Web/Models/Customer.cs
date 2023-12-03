@@ -32,8 +32,14 @@ namespace CCSU.CS.OpenInvoice.Web.Models
 
             get
             {
-                var address = Address + (string.IsNullOrEmpty(Address2) ? "" : " " + Address2);
-                return Name + "\n" + address + "\n" +  City + ", " + State + " " + Zip;
+                var address = (string.IsNullOrEmpty(Address) ? "" : Address) + (string.IsNullOrEmpty(Address2) ? "" : " " + Address2);
+                var city = (string.IsNullOrEmpty(City) ? "" : City) + (string.IsNullOrEmpty(State) ? "" : ", " + State) + (string.IsNullOrEmpty(Zip) ? "" : ", " + Zip);
+
+                if (string.IsNullOrEmpty(address) && string.IsNullOrEmpty(city))
+                    return "";
+
+                return Name + "\n" + address + "\n" + City + ", " + State + " " + Zip;
+
             }
 
         }

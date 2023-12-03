@@ -96,8 +96,12 @@ $(document).ready(function () {
             {
                 target: 12,
                 className: 'dt-body-center',
+                width : 300,
                 searchable: false,
                 orderable: false
+            },
+            {
+
             }
 
 

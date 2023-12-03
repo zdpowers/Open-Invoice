@@ -31,6 +31,12 @@ $(document).ready(function () {
         let invoiceUrl = "/Customer/" + customerId + "/Invoice/" + invoiceId;
         window.location.href = invoiceUrl;
     });
+    $("#invoiceTable").on('click', '.btn-invoice-clone', function () {
+        let invoiceData = $('#invoiceTable').dataTable().api().row($(this).parents('tr')).data();
+        let invoiceId = invoiceData.Id;
+        let invoiceUrl = "/Invoice/" + invoiceId + "/clone";
+        window.location.href = invoiceUrl;
+    });
 
     // Delete Confirmation Modal
     $("#invoiceTable").on('click', '.btn-invoice-delete-modal', function () {
@@ -93,12 +99,15 @@ $(document).ready(function () {
             { data: 'Customer.Name' },
             { data: 'Date' },
             { data: 'DueDate' },
-            { data: 'Total' },
+            {
+                data: 'Total',
+                render: $.fn.dataTable.render.number(',', '.', 2, '$')
+            },
             { data: 'CustomerId' },
             {
                 data: null,
                 render: function (data, type, row) {
-                    return '<button class="btn btn-primary btn-invoice-edit" data-id="' + row.Id + '"><i class="fa-solid fa-pen-to-square p-1"></i>Edit</button> <button type="button" class="btn btn-danger ml-2 btn-invoice-delete-modal"><i class="fa-solid fa-trash p-1"></i>Delete</button>';
+                    return '<button class="btn btn-primary btn-invoice-edit" data-id="' + row.Id + '"><i class="fa-solid fa-pen-to-square p-1"></i>Edit</button> <button type="button" class="btn btn-danger ml-2 btn-invoice-delete-modal"><i class="fa-solid fa-trash p-1"></i>Delete</button><button type="button" class="btn btn-info ml-2 btn-invoice-clone"><i class="fa-solid fa-clone p-1"></i>Clone</button>';
                 }
             }
            

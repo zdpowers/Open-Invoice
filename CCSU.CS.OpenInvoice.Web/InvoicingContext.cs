@@ -1,4 +1,5 @@
 ﻿using CCSU.CS.OpenInvoice.Web.Models;
+using CCSU.CS.OpenInvoice.Web.Models.SampleData;
 using Microsoft.EntityFrameworkCore;
 
 namespace CCSU.CS.OpenInvoice.Web
@@ -24,5 +25,17 @@ namespace CCSU.CS.OpenInvoice.Web
         // special "local" folder for your platform.
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite($"Data Source={DbPath}");
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Entity<Company>().HasData(SampleData.Company);
+            modelBuilder.Entity<Customer>().HasData(SampleData.Customers);
+            modelBuilder.Entity<Invoice>().HasData(SampleData.GetInvoices());
+            modelBuilder.Entity<LineItem>().HasData(SampleData.LineItems);
+
+
+
+        }
     }
 }

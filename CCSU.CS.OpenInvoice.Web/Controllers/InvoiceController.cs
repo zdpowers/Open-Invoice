@@ -22,24 +22,21 @@ namespace CCSU.CS.OpenInvoice.Web.Controllers
         [Route("Customer/{customerId}/Invoice")]
         public IActionResult CustomerInvoice(int customerId, int invoiceId)
         {
-            var company = _invoicingContext.Companies.FirstOrDefault();
+            var company = _invoicingContext.Companies.FirstOrDefault() ?? new Company();
             var customer = _invoicingContext.Customers.FirstOrDefault(customer => customer.Id == customerId);
 
-            if (company is null)
-            {
-                Response.WriteAsync("<script>alert('Please enter Company information.'); window.location.href = '/Company';</script>");
-                return Redirect("/Company");
-            }
-            else if (invoiceId != 0)
+            if (invoiceId != 0)
             {
 
                 var invoice = _invoicingContext.Invoices.Where(invoice => invoice.Id == invoiceId).Include(invoice => invoice.LineItems).FirstOrDefault();
-                invoice.Logo = company.Logo; 
+                invoice.Logo = company.Logo;
                 return View(invoice);
 
             }
-            else {
- 
+
+            else
+            {
+
                 var invoice = new Invoice
                 {
 
@@ -54,7 +51,21 @@ namespace CCSU.CS.OpenInvoice.Web.Controllers
                 return View(invoice);
 
             }
-            
+
+        }
+        [HttpGet]
+        [Route("/Invoice/{invoiceId}/clone")]
+        public IActionResult CustomerInvoice(int invoiceId)
+        {
+            var company = _invoicingContext.Companies.FirstOrDefault() ?? new Company();
+            var invoice = _invoicingContext.Invoices.Where(invoice => invoice.Id == invoiceId).Include(invoice => invoice.LineItems).FirstOrDefault();
+            foreach (var item in invoice.LineItems) {
+                item.Id = 0;
+            }
+            invoice.Id = 0;
+            invoice.Logo = company.Logo;
+            return View(invoice);
+
         }
 
 

@@ -121,7 +121,13 @@ body {
         animation: fadein 0.5s, fadeout 0.5s 2.5s;
     }
 
+.invoice-logo {
+    min-height: 120px; 
+}
 
+textarea {
+    white-space: pre-wrap;
+}
 .invoice-logo img {
     border-radius: 4px;
     max-width: 200px;

@@ -43,6 +43,14 @@ function docToPDF() {
     var invoiceContent = document.documentElement;
     // Create a deep clone of the HTML content
     var clonedContent = invoiceContent.cloneNode(true);
+    var textareas = clonedContent.querySelectorAll('textarea');
+    textareas.forEach(function (textarea) {
+        var div = document.createElement('div');
+        div.classList.add('form-control')
+        div.classList.add('div-invoice-print')
+        div.innerHTML = textarea.value.replace(/\n/g, '<br>');
+        textarea.parentNode.replaceChild(div, textarea);
+    });
 
     var style = document.createElement('style');
     style.innerHTML = `
@@ -52,6 +60,9 @@ function docToPDF() {
         .form-control {
             padding:0rem;
             padding-left:0.5rem;
+        }
+        .div-invoice-print{
+            min-height:80px;
         }
         .input-group-text{
              padding:0rem;
@@ -88,8 +99,9 @@ function docToPDF() {
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
 
-    // Use html2pdf to convert HTML content to PDF
-    html2pdf().from(clonedContent).set(opt).save();
+    html2pdf().from(clonedContent).set(opt).toPdf().get('pdf').then(function (pdf) {
+        window.open(pdf.output('bloburl'), '_blank');
+    });
 
 }
 
