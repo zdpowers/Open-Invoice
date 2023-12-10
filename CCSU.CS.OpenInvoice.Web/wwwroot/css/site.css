@@ -146,6 +146,19 @@ textarea {
     padding:20px;
 }
 
+.home-title {
+    color: #084f8d;
+    font-weight: 400;
+}
+.home-subtile {
+    font-style: italic;
+}
+
+.home-image {
+    margin: 20px;
+    border: 8px solid #084f8d
+}
+
 @media print {
     .non-print {
         display: none !important;
