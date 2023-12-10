@@ -14,8 +14,18 @@ builder.Services.AddControllersWithViews().AddJsonOptions(options =>
 
 );
 builder.Services.AddDbContext<InvoicingContext>();
+builder.Services.AddWindowsService();
+builder.Services.AddHostedService<OpenInvoiceRunService>();
 
+// ensures database is created if doesn't exist. Runs when application starts
 var app = builder.Build();
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<InvoicingContext>();
+    dbContext.Database.EnsureCreated();
+    // use context
+}
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
