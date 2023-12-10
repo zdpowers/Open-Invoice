@@ -76,7 +76,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <input type="hidden" class="form-control" id="editCustomerId"> <!--This is required for the delete-->
+                    <input type="hidden" class="form-control" id="editCustomerId" asp-for="Id"> <!--This is required for the customer delete and update-->
                     <button type="button" class="btn btn-danger ml-2 btn-customer-delete-modal"><i class="fa-solid fa-trash p-1"></i>Delete</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save</button>
