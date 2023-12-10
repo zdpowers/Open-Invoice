@@ -31,9 +31,9 @@ namespace CCSU.CS.OpenInvoice.Web.Controllers
                 }
                 else
                 {
-
-                    var createdCustomer = _invoicingContext.Customers.Add(customer);
+                    _invoicingContext.Customers.Add(customer);
                 }
+
                 await _invoicingContext.SaveChangesAsync();
                 return CreatedAtAction("GetCustomer", new { id = customer.Id }, customer);
             }

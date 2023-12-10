@@ -171,9 +171,10 @@ $(document).ready(function () {
     });
 
     $("#customerAddButton").on("click", function (e) {
-        $(customerModal).find(".modal-title").html("Add Customer")
-        $(customerModal).find(".btn-danger").hide()
         form[0].reset()
+        $(customerModal).find(".modal-title").html("Add Customer");
+        $(customerModal).find(".btn-danger").hide();
+        $(customerModal).find("#editCustomerId").val("0");
         $(customerModal).modal();
     });
 
